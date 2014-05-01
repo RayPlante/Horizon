@@ -40,23 +40,22 @@ This distribution contains some or all of the following files and
 directories:
 
    README             This file
-   classes            directory containing the Horizon class files
-   data               directory containing data used with examples
    examples           directory containing runnable demonstrations of
                   	 applets built from Horizon objects
-    
+     examples/data    directory containing data used with examples
    docs               directory containing documentation
-
-     docs/api         directory containing API documentation
-    
-     docs/api/packages.html	 overview of the Horizon sub-packages
-    
+     docs/articles    directory containing manual
    src                directory containing the Horizon source code
    COPYRIGHT          copyright statement and conditions for use
    COPYING.GNU        GNU Public License Agreement (applying to the
                   	  FITSWCS package)
    COPYRIGHT.contrib  copyright statement for non-Horizon software
                           distributed with it.
+
+Binary distributions also include:
+   classes            directory containing the Horizon class files
+   docs/api           directory containing API documentation
+    
 
 Distributions containing all of the above items can be obtained from
 our Web site (http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/).

@@ -1,0 +1,26 @@
+Status of the Horizon package
+=============================
+
+Origins
+-------
+
+This library was first developed by the NCSA Radio Astronomy Imaging
+Group, led by Raymond Plante, during 1996-98 as part of two
+NASA-funded projects (Project Horizon, a NASA cooperative agreement
+and Project 30, a NASA AISRP grant (96-OSS-10).  Version 1.3 beta-rc7 was
+released in 1998.  This version was compatible with Java 1.1.
+
+Development was discontinued after version 1.3 beta-rc7.  In 2014,
+this version was uploaded to a GitHub repository
+(https://github.com/RayPlante/Horizon).  Developers welcome to submit
+issues and pull requests. 
+
+Current Status
+--------------
+
+Work is now underway to assess the overall state of the code,
+including compliance with modern JVMs, compliance with current
+versions of the FITS standards, and any remaining bugs.  A modern
+build and test system will be added.  
+
+There is currently no schedule for this work.  
