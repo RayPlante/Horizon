@@ -150,14 +150,14 @@ public class MetadataViewer extends Panel
 
 	  // I'm trying to get an Enumeration object so that i can get
 	  // keys (names) to all the objects in the Metadata object.
-	  Enumeration enum = ((Metadata)mdata).metadatumNames();
+	  Enumeration e = ((Metadata)mdata).metadatumNames();
 
 	  // Running a recursive loop to get the values of all the Metadata and
 	  // build the panel.
-	  for (; enum.hasMoreElements();)
+	  for (; e.hasMoreElements();)
 	    {
 	      // Saving the Metadatum name.
-	      String nextName = (String)enum.nextElement();
+	      String nextName = (String)e.nextElement();
 
 	      // Saving the Metadatum value.
 	      Object nextValue = ((Metadata)mdata).getMetadatum(nextName);
