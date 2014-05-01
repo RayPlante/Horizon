@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>LinSphCoordinateSystem: Combining Spherical and
+Linear Coordinates</TITLE>
+<META NAME="description" CONTENT="LinSphCoordinateSystem: Combining Spherical and
+Linear Coordinates">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html357" HREF="node22.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html355" HREF="node18.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html351" HREF="node20.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html359" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html358" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<B>Up:</B> <A NAME="tex2html356" HREF="node18.html">Example Coordinate Systems</A>
+<B> Previous:</B> <A NAME="tex2html352" HREF="node20.html">LinearCoordinateSystem: a System With </A>
+<BR> <P>
+<H3><A NAME="SECTION00042300000000000000"><TT>LinSphCoordinateSystem</TT>: Combining Spherical and
+Linear Coordinates</A></H3>
+<P>
+<A NAME="SexampleCSspherical">&#160;</A>
+<P>
+Earth, space, and astronomical data often exist in a spherical
+coordinate space.  For instance, one might want to know the longitude
+and latitude of a position in a satalitte image of the Earth.  In
+addition to longitude and latitude dimensions, the dataset may have
+one or more additional linear axes, such as Frequency.  To support
+this hybrid system of linear and spherical axes, the Horizon package
+provides the <TT>LinSphCoordinateSystem</TT> class.
+<P>
+Spherical axes are tricky because they involve a <em>projection</em> of
+a curved surface (like the surface of the Earth) onto a flat plane
+(the satalite's camera plane where a CCD detector is located).  There
+are a large number of ways this projection can be done; 25 different
+ways are currently supported by Horizon.  The linear effects that are
+handled by the <TT>LinearCoordinateSystem</TT> are also handle by this
+hybrid system as well.  (Thus, any system that
+<TT>LinearCoordinateSystem</TT> can handle, this class can handle as
+well, with or without any additional spherical axes.)
+<P>
+You can see an example of the use of this system in support of an
+astronomical image in &#167;<A HREF="node36.html#SCDAViewable">4.2</A>.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

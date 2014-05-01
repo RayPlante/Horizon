@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Converting Between Multiple Coordinate Systems</TITLE>
+<META NAME="description" CONTENT="Converting Between Multiple Coordinate Systems">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html368" HREF="node23.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html366" HREF="node14.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html360" HREF="node21.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html370" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html369" HREF="node23.html">Basic Use</A>
+<B>Up:</B> <A NAME="tex2html367" HREF="node14.html">The World Coordinate System </A>
+<B> Previous:</B> <A NAME="tex2html361" HREF="node21.html">LinSphCoordinateSystem: Combining Spherical and
+</A>
+<BR> <P>
+<H2><A NAME="SECTION00043000000000000000">Converting Between Multiple Coordinate Systems</A></H2>
+<P>
+<A NAME="SmultiCS">&#160;</A>
+<P>
+The coordinate system classes are designed to support arbitrarily
+complex coordinate systems as well as to allow easy conversion between
+systems.  The actual job of transforming between systems is done by
+one or more <TT>CoordTransform</TT> objects, each handling a specialized
+transformation.  To engage a <TT>CoordTransform</TT> object, one can
+``attach'' it to a <TT>CoordinateSystem</TT> object.  By attaching multiple
+<TT>CoordTransform</TT> objects, one effectively can ``daisy-chain''
+them together to produce more complicated transformations.  They can
+be attached during the <TT>CoordinateSystem</TT> object's construction or
+anytime after, say, by request of the user.  <TT>CoordTransform</TT>
+objects can also be used independent of any <TT>CoordinateSystem</TT>.
+<P>
+<BR> <HR>
+<UL><A NAME="CHILD_LINKS">&#160;</A>
+<LI> <A NAME="tex2html371" HREF="node23.html#SECTION00043100000000000000">Basic Use</A>
+<LI> <A NAME="tex2html372" HREF="node24.html#SECTION00043200000000000000">Use Outside of a <TT>CoordinateSystem</TT></A>
+<LI> <A NAME="tex2html373" HREF="node25.html#SECTION00043300000000000000">Implementing New <TT>CoordTransform</TT> Classes</A>
+<UL>
+<LI> <A NAME="tex2html374" HREF="node26.html#SECTION00043310000000000000"><TT>getInAxes(), getOutAxes()</TT></A>
+<LI> <A NAME="tex2html375" HREF="node27.html#SECTION00043320000000000000"><TT>determineConstraints(Metadata in, boolean forwards)</TT></A>
+<LI> <A NAME="tex2html376" HREF="node28.html#SECTION00043330000000000000"><TT>init(CoordinateSystem csys, boolean forward, int[]
+                 axisIndexList)</TT></A>
+<LI> <A NAME="tex2html377" HREF="node29.html#SECTION00043340000000000000"><TT>getMetadata(Metadata in, boolean forward, int[] axisIndices)</TT></A>
+</UL>
+</UL>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

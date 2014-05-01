@@ -1,0 +1,160 @@
+Horizon Java Image Data Browser Package
+=======================================
+
+The Horizon package is a library of Java classes for browsing and
+visualizing scientific image data.  It is made is made up of
+Java classes and interfaces, as well as ready-to-use applets and
+applications. The design is meant to (in principle) support any image
+format originating either from the Web or local disk. Here are some of
+the features we are working on:
+
+     basic 2D visualization of multidimensional data 
+     zooming, subsetting, animation 
+     spreadsheet browsing 
+     color fiddling 
+     progressive image transmission 
+     overlaying multiple images 
+     support for collaborative sessions facilitate by the 
+         NCSA Habanero Collaborative Tool 
+     Easy adaptability and extensibility 
+
+Please note that this is beta software, provided primarily as a
+preview of what the Horizon package will be able to do when it is
+released in its final form.  While you are welcome to make use of
+these classes now, please note that the API is still under development
+and may be subject to changes incompatible with this beta release.  
+THIS IS THE LAST RELEASE COMPATIBLE WITH JAVA JDK 1.0.2; except for a
+few possible bug fix releases, future release will be compatible with
+Java 1.1.x. 
+
+This package should have come with full copyright statements and
+conditions for use, as well as, possible, API documentation.  If not,
+copies may be obtained by accessing our Web site
+(http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/) or by sending email
+to horizon@ncsa.uiuc.edu.
+
+Contents
+========
+
+This distribution contains some or all of the following files and
+directories:
+
+   README             This file
+   classes            directory containing the Horizon class files
+   data               directory containing data used with examples
+   examples           directory containing runnable demonstrations of
+                  	 applets built from Horizon objects
+    
+   docs               directory containing documentation
+
+     docs/api         directory containing API documentation
+    
+     docs/api/packages.html	 overview of the Horizon sub-packages
+    
+   src                directory containing the Horizon source code
+   COPYRIGHT          copyright statement and conditions for use
+   COPYING.GNU        GNU Public License Agreement (applying to the
+                  	  FITSWCS package)
+   COPYRIGHT.contrib  copyright statement for non-Horizon software
+                          distributed with it.
+
+Distributions containing all of the above items can be obtained from
+our Web site (http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/).
+
+Overview of Horizon Sub-Packages Included in This Release
+=========================================================
+
+ncsa.horizon.viewable    -- a visualization interface into a dataset
+ncsa.horizon.viewer      -- viewers for displaying 2D visualizations
+                            of data
+ncsa.horizon.coordinates -- classes mapping voxels to world coordinates.
+ncsa.horizon.awt         -- other GUI helper classes
+ncsa.horizon.util        -- non GUI helper classes
+ncsa.horizon.modules     -- GUI components that can drive applications
+ncsa.horizon.data        -- classes associated with reading data; includes
+			    format-specific readers
+ 
+ncsa.fits                -- an adaptation of a FITS reader by Tom
+			    McGlynn of NASA/GSFC.
+
+FITSWCS                  -- library implementing the FITS proposal for
+                            supporting astronomical world coordinates
+Acme                     -- a few classes from Jef Poskanzer's Acme
+                            package for printing floating point
+                            numbers with arbitrary precision.
+CoolBeans                -- a Layout Manager 
+misc                     -- miscellaneous borrowed code
+
+Running the Example Demos
+=========================
+
+To run the example demos, you should:
+
+  * have the standard Java libraries installed on your system.  This
+    could in the form of Sun's Java Developer's Kit (JDK), version 
+    1.0.2 or later.  To run the demos as applets, we recommend you use
+    the appletviewer that comes with JDK.
+
+  * have the Horizon package installed on your system.  If you are
+    reading this, it is probably already installed.  
+
+  * properly set you CLASSPATH environment to include both the 
+    standard Java libraries, the Horizon library, and the current 
+    directory.  On a Unix system in the C-shell, one might do this by
+    typing something like: 
+
+      setenv CLASSPATH <std_classpath>:<horizon_path>/classes:.
+
+    where <std_classpath> is path to the standard Java libraries and 
+    <horizon_path> is the directory containing the Horizon
+    distribution.  For example, on an SGI system, it may look like:
+
+      setenv CLASSPATH /usr/java/classes:$HOME/Horizon/classes:.
+
+    or under Bourne shell or K-shell:
+
+      CLASSPATH=/usr/java/classes:$HOME/Horizon/classes:.; export CLASSPATH
+
+See the README files in the individual sub directories here for
+details about running the specific demos.  
+
+This demos can also be run from our Web site,
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples.  
+
+Acknowledgements
+================
+
+Project Horizon would like to thank the following people:  
+  * Mark Calabretta for providing the original WCSLIB software 
+  * Jef Poskanzer for his open distribution of the Acme.Fmt class 
+    distributed with the FITSWCS package.  
+  * Kul Bhatt for misc classes (in the misc package).
+  * Danno Ferrin for the PositionLayout from the Cool_Beans package
+
+The Horizon Java package is supported in part by Project Horizon, a
+cooperative agreement between NASA and the University of Illinois,
+Urbana-Champaign.  It is also supported by the NASA Office of Space
+Science via the Applied Information Systems Research Program
+(96-OSS-10).  
+
+Copyright
+=========
+
+NCSA Horizon Image Browser
+Project Horizon
+National Center for Supercomputing Applications
+University of Illinois at Urbana-Champaign
+605 E. Springfield, Champaign IL 61820
+horizon@ncsa.uiuc.edu
+
+Copyright (C) 1996, 1997, 1998, Board of Trustees of the University 
+of Illinois
+
+NCSA Horizon software, both binary and source (hereafter, Software) is
+copyrighted by The Board of Trustees of the University of Illinois
+(UI), and ownership remains with the UI.
+
+You should have received a full statement of copyright and
+conditions for use with this package; if not, a copy may be
+obtained from the above address.  Please see this statement
+for more details.

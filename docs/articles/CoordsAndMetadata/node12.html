@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Handling Arrays: The Horizon Metavector Class</TITLE>
+<META NAME="description" CONTENT="Handling Arrays: The Horizon Metavector Class">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html243" HREF="node13.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html241" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html235" HREF="node11.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html245" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html244" HREF="node13.html">On-Demand Data Loading: The </A>
+<B>Up:</B> <A NAME="tex2html242" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html236" HREF="node11.html">Protecting Metadata Via Defaults</A>
+<BR> <P>
+<H2><A NAME="SECTION00034000000000000000">Handling Arrays: The Horizon <TT>Metavector</TT> Class</A></H2>
+<P>
+<A NAME="SMetavector">&#160;</A>
+<P>
+As was alluded to in the previous section, the <TT>Metavector</TT> class is a
+container for holding array metadata of any type.  Instead of
+accessing data by name, one access them by integer index.  It is very
+similar to the <TT>java.util.Vector</TT> class, sharing much of the same
+interface and methods.  Elements can be added, inserted, and removed
+much like a <TT>Vector</TT>:
+<PRE>Metavector mv = new Metavector();
+mv.addElement(new Double(1.2));          // adds element at position 0
+mv.setElementAt(new Double(4.0), 2);     // sets element at position 2
+mv.addElement(new Double(3));            // adds element at position 3
+mv.setElementAt(new Double(4.0), 1);     // sets element at position 1
+mv.insertElementAt(new Double(4.0), 1);  // inserts element at position 1,
+                                         //   shifting elements 1-3 up by one
+mv.removeElementAt(0);                   // deletes element 0, shifting the
+                                         //   remaining elements down by one
+mv.eraseElementAt(2);                    // sets element 2 to null</PRE>
+The size of the <TT>Metavector</TT> will grow as necessary.  Accessing the
+values is also much like with the <TT>Vector</TT> class:
+<PRE>int sz = mv.size();
+Double[] dval = new Double[sz];
+for(int i=0; i &lt; sz; i++) {
+    Double dval = (Double) mv.elementAt(i);
+}</PRE>
+As with the <TT>Metadata</TT> class, one needs to know ahead of time what type
+the <TT>Metavector</TT> holds so that the values can be cast to the proper
+type.  As one can see from the above example, it usually makes sense
+to only store one type of data in a <TT>Metavector</TT> object; though, as
+with a <TT>Vector</TT>, there is nothing stopping you from living
+dangerously.
+<P>
+There are some important ways in which a <TT>Metavector</TT> is different from
+a regular <TT>Vector</TT> which are related to how it is like a
+<TT>Metadata</TT> object.  Like the <TT>Metadata</TT>, a <TT>Metavector</TT> contains an
+internal <TT>Metavector</TT> that holds default values which are set at
+construction and can not be publicly updated.  If a client object
+calls <TT>elementAt(int)</TT> and the value in the primary array is
+null, the value stored in the default <TT>Metavector</TT> at the same position
+is returned.  Because of the existance of the default array, important
+restrictions are placed on the methods that update the array elements.
+First, one is not allowed to reduce the size of <TT>Metavector</TT> to less
+than the size of its default <TT>Metavector</TT>.  Furthermore, one cannot
+remove an element at a position index that is less than the size of
+the default list.  One <em>can</em> erase a value at any position, which
+sets the value to null, exposing possible default values.  To reflect
+these restrictions, each update method returns a <TT>boolean</TT>
+indicating whether the update was allowed and successful.
+<P>
+The purpose of the <TT>Metavector</TT> class is to provide a convenient and safe
+way to store array data within a <TT>Metadata</TT> object.  The convenience
+comes in the way the <TT>Metadata</TT> class treats <TT>Metavector</TT>s as a
+type of sub-metadata.  For instance, suppose that a <TT>Metavector</TT> is
+stored an element of a <TT>Metadata</TT> object with the name ``Axes''; one
+can access an element of that <TT>Metavector</TT> directly from the <TT>Metadata</TT>
+object:
+<PRE>Metadata md;
+...
+Object element = md.getMetadatum(&quot;Axes[1]&quot;);</PRE>
+This returns the object at index 1 (the second element) of the
+Metavector called ``Axes''.  Furthermore, if the elements held within
+the <TT>Metavector</TT> are of type <TT>Metadata</TT>, then access to further
+sub-sub-metadata is possible:
+<PRE>String name = (String) md.getMetadatum(&quot;coordinates.Axes[1].name&quot;);</PRE>
+Thus, the ``sub-metadata'' syntax provides access to hierarchical
+metadata of arbitrary depth.  (If the <TT>Metavector</TT> does not contain
+<TT>Metadata</TT> elements, the above statement will return <TT>null</TT>.)
+Remember, one <em>cannot</em> use the ``sub-metadata'' syntax to update
+hierarchical metadata.
+<P>
+<HR><A NAME="tex2html243" HREF="node13.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html241" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html235" HREF="node11.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html245" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html244" HREF="node13.html">On-Demand Data Loading: The </A>
+<B>Up:</B> <A NAME="tex2html242" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html236" HREF="node11.html">Protecting Metadata Via Defaults</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

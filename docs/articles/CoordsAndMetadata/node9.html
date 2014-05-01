@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Use Consistant Value Types When Reading and Writing Metadata.</TITLE>
+<META NAME="description" CONTENT="Use Consistant Value Types When Reading and Writing Metadata.">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html212" HREF="node10.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html210" HREF="node7.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html204" HREF="node8.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html214" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html213" HREF="node10.html">Handle Updateable Metadata Values </A>
+<B>Up:</B> <A NAME="tex2html211" HREF="node7.html">Possible Pitfalls and Safety </A>
+<B> Previous:</B> <A NAME="tex2html205" HREF="node8.html">Use only String objects </A>
+<BR> <P>
+<H4><A NAME="SECTION00032220000000000000">Use Consistant Value Types When Reading and Writing Metadata.</A></H4>
+<P>
+Similarly, it is possible for one save a metadatum with the ``wrong''
+type-that is to say, a type different from (and not a subclass of)
+that which other objects expect for a particular metadatum name.  Such
+an error would likely result in a <TT>ClassCastException</TT> (as
+described in &#167;<A HREF="node5.html#SMetadataCls">2.2</A>) when accessing the datum.  Thus,
+it is important to be sure that metadata types are consistant between
+the metadata ``readers'' and the metadata ``writers''.  Of course,
+refering to a metadatum value via a superclass of the value's type is
+perfectly acceptable (sometimes better) and should not cause any
+problems.
+<P>
+Of course, it would be best if these type errors could be caught at
+compile-time.  The recommended way of accomplishing this is to
+subclass the <TT>Metadata</TT> object to produce a class designed for a
+specific schema in which the mapping of metadatum names to value types
+is defined.  In the subclass, one could define specialized data
+loading methods that enforce the schema's value types.  For example,
+one could define a method <TT>setAltitude(Double)</TT> which would save
+the <TT>Double</TT> argument via the <TT>String</TT> key ``altitude''.  Because
+the method only accepts a <TT>Double</TT> argument, it enforces the
+proper type at compile-time.  &#167;<A HREF="node17.html#SCoordMetadata">3.1.2</A> illustrates an
+example of this technique in which a subclass of <TT>Metadata</TT> called
+<TT>CoordMetadata</TT> helps to encourage type safety for metadata related to
+Horizon coordinate systems.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

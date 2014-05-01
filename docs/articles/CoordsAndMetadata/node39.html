@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Horizon Schema</TITLE>
+<META NAME="description" CONTENT="The Horizon Schema">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html567" HREF="node40.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html565" HREF="node37.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html561" HREF="node38.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html569" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html568" HREF="node40.html">Viewable Metadata</A>
+<B>Up:</B> <A NAME="tex2html566" HREF="node37.html">Metadata Lexicons</A>
+<B> Previous:</B> <A NAME="tex2html562" HREF="node38.html">Universal Metadata</A>
+<BR> <P>
+<H2><A NAME="SECTION00062000000000000000">The Horizon Schema</A></H2>
+<P>
+<A NAME="AhorizonSchema">&#160;</A>
+<P>
+The metadata that make up the Horizon Schema are described in the next
+three subsections.  In Appendix&nbsp;<A HREF="node40.html#Atoplex">A.2.1</A>, dataset-level metadata 
+are presented; these are names that might be returned by a
+<TT>Viewable</TT>'s <TT>getMetadata()</TT> method.  Appendix&nbsp;<A HREF="node41.html#Acmlex">A.2.2</A>
+lists metadata related to a dataset's world coordinate system.  These
+metadata would normally be sub-metadata of the
+<B>CoordinateSystem</B> metadatum, making up part of the dataset
+level metadata; they would also be returned as top-level metadata
+(i.e. not sub-metadata) by a <TT>CoordinateSystem</TT>'s
+<TT>getMetadata()</TT> method.  Finally, Appendix&nbsp;<A HREF="node42.html#Acmlexax">A.2.3</A> gives
+the metadata related to a single coordinate axis.  These metadata
+would normally appear as sub-metadata of each element of the
+<B>Axes</B> metadatum.
+<P>
+The Horizon schema uses the convention that names begin with a
+lower-case letter unless they are of either type <TT>Metadata</TT> or
+type <TT>Metavector</TT>.  The capitalization of the first letter
+therefore indicates that the metadatum contains sub-metadata.  For
+example, the <B>CoordinateSystem</B> metadatum is of type
+<TT>Metadata</TT> which can contain the sub-metadatum
+CoordinateSystem.name.  The <B>Axes</B> metadatum is of type
+<TT>Metavector</TT>; it may therefore contain the sub-metedatum
+<B>Axes[1].type</B>.
+<P>
+<BR> <HR>
+<UL><A NAME="CHILD_LINKS">&#160;</A>
+<LI> <A NAME="tex2html570" HREF="node40.html#SECTION00062100000000000000">Viewable Metadata</A>
+<LI> <A NAME="tex2html571" HREF="node41.html#SECTION00062200000000000000">Coordinate System Metadata</A>
+<LI> <A NAME="tex2html572" HREF="node42.html#SECTION00062300000000000000">Coordinate Axis Metadata</A>
+</UL>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

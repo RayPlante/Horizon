@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>CoordinateSystem: the Simplest System</TITLE>
+<META NAME="description" CONTENT="CoordinateSystem: the Simplest System">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html337" HREF="node20.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html335" HREF="node18.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html329" HREF="node18.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html339" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html338" HREF="node20.html">LinearCoordinateSystem: a System With </A>
+<B>Up:</B> <A NAME="tex2html336" HREF="node18.html">Example Coordinate Systems</A>
+<B> Previous:</B> <A NAME="tex2html330" HREF="node18.html">Example Coordinate Systems</A>
+<BR> <P>
+<H3><A NAME="SECTION00042100000000000000"><TT>CoordinateSystem</TT>: the Simplest System</A></H3>
+<P>
+<A NAME="SexampleCSsimple">&#160;</A>
+<P>
+The <TT>CoordinateSystem</TT> class represents a trivial system in which
+no transformation is made between data voxels and coordinate space.
+Another way to put it is that a position in the coordinate space is
+identical to the position in the dataset.  An object of this class can
+be created with one line:
+<PRE>    // create a simple coordinate system with 2 axes
+    CoordinateSystem coord = new CoordinateSystem(new CoordMetadata(2));</PRE>
+This system is often used with simple GIF or JPEG images since these
+formats do not generally include metadata that can define a
+coordinate system.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>LinearCoordinateSystem: a System With Linear Axes</TITLE>
+<META NAME="description" CONTENT="LinearCoordinateSystem: a System With Linear Axes">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html348" HREF="node21.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html346" HREF="node18.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html340" HREF="node19.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html350" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html349" HREF="node21.html">LinSphCoordinateSystem: Combining Spherical and
+</A>
+<B>Up:</B> <A NAME="tex2html347" HREF="node18.html">Example Coordinate Systems</A>
+<B> Previous:</B> <A NAME="tex2html341" HREF="node19.html">CoordinateSystem: the Simplest System</A>
+<BR> <P>
+<H3><A NAME="SECTION00042200000000000000"><TT>LinearCoordinateSystem</TT>: a System With Linear Axes</A></H3>
+<P>
+<A NAME="SexampleCSlinear">&#160;</A>
+<P>
+The metadata that were illustrated in the example in
+&#167;<A HREF="node17.html#SCoordMetadata">3.1.2</A> actually describe a simple, two-dimensional
+coordinate system in which each axis is linear.  We can turn that
+collection of metadata into <TT>CoordinateSystem</TT> easily using the
+<TT>LinearCoordinateSystem</TT>: 
+<PRE>    // create a simple linear coordinate system
+    CoordinateSystem coord = new LinearCoordinateSystem(cmdata);</PRE>
+Notic how this <TT>CoordinateSystem</TT> uses the metadata to make a linear
+transformation between data voxels and coordinate positions:
+<PRE>double datapos[] = refpos;
+CoordPos cpos = coordSys.getCoordPos(datapos);   
+System.out.println( cpos.getAxisLabel(0) + &quot;: &quot; + cpos.getValueString(0) );
+System.out.println( cpos.getAxisLabel(1) + &quot;: &quot; + cpos.getValueString(1) );
+System.out.println( cpos.getAxisLabel(2) + &quot;: &quot; + cpos.getValueString(2) );
+/* 
+ * OUTPUT:
+ * East-West: 0
+ * North-South: 0
+ * Altitude: 0
+ */
+
+double centralTower[] = { 0, 0, 25 }; 
+cpos = coordSys.getCoordPos(centralTower);
+System.out.println( cpos.getAxisLabel(0) + &quot;: &quot; + cpos.getValueString(0) );
+System.out.println( cpos.getAxisLabel(1) + &quot;: &quot; + cpos.getValueString(1) );
+System.out.println( cpos.getAxisLabel(2) + &quot;: &quot; + cpos.getValueString(2) );
+/* 
+ * OUTPUT:
+ * East-West: 28.75
+ * North-South: -72.25
+ * Altitude: 250
+ */</PRE>
+<P>
+The <TT>LinearCoordinateSystem</TT> can also account for rotations and
+skewing of the coordinate system with respect to the dataset planes.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

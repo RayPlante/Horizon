@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Use only String objects as keys.</TITLE>
+<META NAME="description" CONTENT="Use only String objects as keys.">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html201" HREF="node9.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html199" HREF="node7.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html193" HREF="node7.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html203" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html202" HREF="node9.html">Use Consistant Value Types </A>
+<B>Up:</B> <A NAME="tex2html200" HREF="node7.html">Possible Pitfalls and Safety </A>
+<B> Previous:</B> <A NAME="tex2html194" HREF="node7.html">Possible Pitfalls and Safety </A>
+<BR> <P>
+<H4><A NAME="SECTION00032210000000000000">Use only <TT>String</TT> objects as keys.</A></H4>
+<P>
+Since you can use the <TT>Hashtable</TT> method <TT>put</TT> to load
+data into a <TT>Metadata</TT> object, it is possible to save a value using a
+key that is not of type <TT>String</TT>.  If you did so, it would not be
+accessible via the <TT>getMetadatum</TT> method since this takes only a
+<TT>String</TT> as an argument.  Of course, there is nothing stopping you from
+using the <TT>Hashtable</TT> method <TT>get</TT> to extract the data,
+regardless of the key type.  Nevertheless, using non-<TT>String</TT> keys is
+not recommended as it is not in keeping with the conceptual design of
+the <TT>Metadata</TT> object; use a <TT>Hashtable</TT> instead.  Objects that
+use <TT>Metadata</TT> objects will expect them to only contain data accessible
+via <TT>String</TT> keys; data saved with non-<TT>String</TT> keys will probably
+never get used and could lead to <TT>ClassCastException</TT>s.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

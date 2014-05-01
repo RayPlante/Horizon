@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Horizon Schema for Coordinate Systems</TITLE>
+<META NAME="description" CONTENT="The Horizon Schema for Coordinate Systems">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html312" HREF="node18.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html310" HREF="node15.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html306" HREF="node16.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html314" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html313" HREF="node18.html">Example Coordinate Systems</A>
+<B>Up:</B> <A NAME="tex2html311" HREF="node15.html">Coordinate System Metadata</A>
+<B> Previous:</B> <A NAME="tex2html307" HREF="node16.html">Using Metadata to Construct </A>
+<BR> <P>
+<H3><A NAME="SECTION00041200000000000000">The Horizon Schema for Coordinate Systems</A></H3>
+<P>
+<A NAME="SCoordMetadata">&#160;</A>
+<P>
+The Horizon package provides several special implementations of the
+<TT>CoordinateSystem</TT> class to support some common coordinate systems
+encountered in scientific data.  These systems can be parameterized
+using metadata defined by the Horizon schema.  While the Horizon
+schema is fully described in Appendix&nbsp;<A HREF="node39.html#AhorizonSchema">A.2</A>, this
+section describes the basic concepts behind the schema and gives some
+examples of its use.
+<P>
+The most commonly used coordinate system metadatum is ``naxes'', an
+<TT>Integer</TT> used to indicate the number of axes in the space
+described by the coordinate system.  Each axis then will require a set
+of metadata to describe the parameters for that axis.  To do this, one
+uses the ``Axes'' metadatum, which is of type <TT>Metavector</TT> whose
+elements are of type <TT>Metadata</TT>, containing the parameters for each
+axis.  The Horizon schema defines a set of metadata that can be used
+to set these parameters.
+<P>
+As of this writing, all of the specialized versions of the
+<TT>CoordinateSystem</TT> class use a scheme of describing coordinate systems
+based on <em>reference voxels</em> (indicated by the axis metadatum
+``axisSchema'' equal to ``referenced'').  In this scheme, one specifies the
+coordinate position of one specific reference voxel; all other
+coordinate positions are referenced to this voxel via some assumed
+function.  The function for a specific axis need not be linear nor
+independent of other axes.   Table&nbsp;<A HREF="node17.html#TaxisMd">3.1.2</A> lists the metadata
+used to describe a <em>referenced</em> axis definition.
+<P>
+<P><A NAME="389">&#160;</A><A NAME="TaxisMd">&#160;</A><BR>
+<STRONG>Table 2:</STRONG> Axis Metadata Defined by the Horizon Schema<BR>
+<P>
+<P>
+One axis metadatum that deserves more explanation is ``formatter''.
+The type of this metadatum, <TT>AxisPosFormatter</TT>, is a
+Horizon-defined interface that can convert a <TT>double</TT> value
+representing a position along a coordinate system axis to a specially
+formatted <TT>String</TT> <BR>[0] (and back again, if necessary).
+Table&nbsp;<A HREF="node17.html#Tformatters">3.1.2</A> lists some of the formatters currently
+supported by Horizon.  Normally, one does not need to explicitly call
+any methods of an <TT>AxisPosFormatter</TT> implementation; this is
+usually done transparently by the <TT>CoordPos</TT> class via its
+<TT>getValueString</TT> method.
+<P>
+<P><A NAME="403">&#160;</A><A NAME="Tformatters">&#160;</A><BR>
+<STRONG>Table 3:</STRONG> Sample Axis Formatting Classes<BR>
+<P>
+<P>
+To aid in the management of coordinate system metadata, the Horizon
+package provides a subclass of <TT>Metadata</TT> called
+<TT>ncsa.horizon.coordinates.CoordMetadata</TT>.  This class provides
+special methods for loading ``referenced'' coordinate system metadata.
+Not only does it make loading the data easier, it helps ensure that
+the data is loaded with the proper types.  First consider a simple
+example in which we want to set the value of ``naxes'', the number of
+axes in our system, with the value of 2.  Here's one way we could do
+it:
+<PRE>    Metadata cmdata = new Metadata();
+    cmdata.put(&quot;naxes&quot;, new Integer(2));</PRE>
+The <TT>CoordMetadata</TT> class offers a safer alternative:
+<PRE>    CoordMetadata cmdata = new CoordMetadata();
+    cmdata.setNaxes(2);</PRE>
+The <TT>setNaxes()</TT> method guarantees <em>at compile-time</em> that
+the ``naxes'' metadatum is save with type <TT>Integer</TT>.
+<P>
+Now consider a more complex example in which our data reader has
+produced the following parameters for a simple linear, referenced
+coordinate system:
+<PRE>    // Number of axes
+    int naxes = 3;
+
+    // Names for the axes
+    String[] names = { &quot;East-West&quot;, &quot;North-South&quot;, &quot;Altitude&quot; };
+
+    // Reference position in degrees
+    double[] refval = { 0.0, 0.0, 0.0 };
+
+    // Reference voxel: the voxel whose position is the reference position.  
+    double[] refpos = { 115.0, 289.0, 0.0 };
+
+    // Voxel size in absolute degrees
+    double[] voxelsize = { -0.25, 0.25, 10.0 };</PRE>
+One can load this data into a <TT>Metadata</TT> object via the following:
+<PRE>    CoordMetadata cmdata = new CoordMetadata(naxes);
+
+    for(int i=0, i &lt; 3; i++) {
+        cmdata.setAxisType(i, &quot;linear&quot;);
+        cmdata.setAxisName(i, names[i]);
+        cmdata.setAxisRefposition(i, refpos[i]);
+        cmdata.setAxisRefvalue(i, refval[i]);
+        cmdata.setAxisStepsize(i, voxelsize[i]);
+    }</PRE>
+This procedure loads all the data with the proper names and types in
+accordance with the ``horizon'' schema and the ``referenced'' axis
+schema.  And the constructor actually does more than set ``naxes'' to
+3; it also automatically sets ``schema'' to ``horizon'' and
+``axisSchema'' to ``referenced'' for each of the axes.  The subsequent
+<em>set</em> methods set the values as <em>sub-metadata</em> of the
+``Axes'' metadatum.  To illustrate this, consider how we might recall
+these values from the <TT>CoordMetadata</TT> object:
+<PRE>    Integer nax = (Integer) cmdata.getMetadatum(&quot;naxes&quot;);  // equals 3
+    String class0 = (String) 
+        cmdata.getMetadatum(&quot;Axes[0].axisSchema&quot;);   // equals &quot;referenced&quot;
+    Double refp1 = (Double)
+        cmdata.getMetadatum(&quot;Axes[1].refposition&quot;);  // equals 289.0</PRE>
+<P>
+<HR><A NAME="tex2html312" HREF="node18.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html310" HREF="node15.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html306" HREF="node16.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html314" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html313" HREF="node18.html">Example Coordinate Systems</A>
+<B>Up:</B> <A NAME="tex2html311" HREF="node15.html">Coordinate System Metadata</A>
+<B> Previous:</B> <A NAME="tex2html307" HREF="node16.html">Using Metadata to Construct </A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

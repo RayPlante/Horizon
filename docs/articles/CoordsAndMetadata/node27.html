@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>determineConstraints(Metadata in, boolean forwards)</TITLE>
+<META NAME="description" CONTENT="determineConstraints(Metadata in, boolean forwards)">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html432" HREF="node28.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html430" HREF="node25.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html424" HREF="node26.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html434" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html433" HREF="node28.html">init(CoordinateSystem csysboolean forward, </A>
+<B>Up:</B> <A NAME="tex2html431" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<B> Previous:</B> <A NAME="tex2html425" HREF="node26.html">getInAxes()getOutAxes()</A>
+<BR> <P>
+<H4><A NAME="SECTION00043320000000000000"><TT>determineConstraints(Metadata in, boolean forwards)</TT></A></H4>
+<P>
+This method makes an educated guess as to how to apply itself to a
+<TT>CoordinateSystem</TT> that is described by a given set of metadata and
+returns that guess in the form of a <TT>CoordTransformConstraints</TT>
+object.  If the boolean input <TT>forwards</TT> is true, then it should
+assume the transform will be applied in the forward direction;
+otherwise, it should assume the reverse direction.  This method is
+called by a <TT>CoordinateSystem</TT> object when the transform gets attached
+to it via the <TT>attachTransform(CoordTransform)</TT> or
+<TT>attachTransform(CoordTransform, boolean)</TT> methods; <BR>[0]
+that is, when you call one of these methods, you have asked the
+<TT>CoordinateSystem</TT> to attach the transform in a way seems sensible.
+(Note that there may exist several ``sensible'' ways; this method only
+returns one of them.)
+<P>
+As an example, consider a transform that operates on a longitude and
+latitude; this method should then search the <TT>Metadata</TT> for values of
+the ``Axis[<em>n</em>].type'' equal to ``longitude'' and ``latitude''
+and create an Axis Index List that picks out these axes.  If it
+operates on a declination axis-a kind of latitude axis-it might
+instead look for values of the ``Axis[<em>n</em>].name'' equal to
+``declination''.  If it cannot find the axes it is looking for, or if
+the Metadata does not have other needed data, and therefore cannot
+determine how to apply the transform, this method should return
+<TT>null</TT>.
+<P>
+If the transform does not care what axes it operates on or what order
+they are in, it can return constraints with a ``trivial'' Axis Index
+List.  That is, the list will be an array containing the sequence of
+integers from 0 to the number of axes (minus one) that the <TT>Metadata</TT>
+list claims it has.  In fact, this is the default implementation; so
+if this applies to your new transform, there is no need to override
+this method.
+<P>
+<HR><A NAME="tex2html432" HREF="node28.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html430" HREF="node25.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html424" HREF="node26.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html434" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html433" HREF="node28.html">init(CoordinateSystem csysboolean forward, </A>
+<B>Up:</B> <A NAME="tex2html431" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<B> Previous:</B> <A NAME="tex2html425" HREF="node26.html">getInAxes()getOutAxes()</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

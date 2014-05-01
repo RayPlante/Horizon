@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Reserved Metadatum Names: schema and schemaVersion</TITLE>
+<META NAME="description" CONTENT="Reserved Metadatum Names: schema and schemaVersion">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html178" HREF="node7.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html176" HREF="node5.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html170" HREF="node5.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html180" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html179" HREF="node7.html">Possible Pitfalls and Safety </A>
+<B>Up:</B> <A NAME="tex2html177" HREF="node5.html">The Horizon Metadata Class</A>
+<B> Previous:</B> <A NAME="tex2html171" HREF="node5.html">The Horizon Metadata Class</A>
+<BR> <P>
+<H3><A NAME="SECTION00032100000000000000">Reserved Metadatum Names: schema and schemaVersion</A></H3>
+<P>
+<A NAME="Sschema">&#160;</A>
+<P>
+The design of the Metadata object tries to be schema-independent so
+that it can support multiple schemata at once.  In keeping with this,
+the design probably should not include any predefined metadatum
+names.  Nevertheless, there is no escaping the necessicity of a
+contract between the <TT>Metadata</TT> list and the client objects that use
+it: they must all agree over what each metadatum name means.  To
+facilitate this contract, our design includes two predefined metadatum
+name: ``schema'' and ``schemaVersion''.
+<P>
+The ``schema'' metadatum is defined to be of type <TT>String</TT> and whose
+value identifies the schema that should be used in accessing and
+interpreting the other metadata in the <TT>Metadata</TT> list.  In other
+words, the value of ``schema'' indicates the name of dictionary that
+should be used to interpret all the other metadata in the list.  This
+dictionary lists the reserved metadata names, value types, and their
+logical meanings.  It is up to the client objects using the <TT>Metadata</TT>
+object to conform to the schema.  If necessary, one is allowed can
+make up new metadata names that are not defined by the schema; in this
+case, one can allow the data to have whatever type and meaning
+necessary to hold the new information.  Thus, the schema-defined
+names should be consider reserved names with required types.
+<P>
+As an example, the Horizon package defines the ``horizon'' schema
+whose reserved names are described in Appendix&nbsp;<A HREF="node39.html#AhorizonSchema">A.2</A>.
+These names are used by other Horizon classes to present data for
+browsing, particularly with regard to their world coordinate system.  In
+this schema, ``CoordinateSystem'' is defined to be of type <TT>Metadata</TT>
+and should contain the metadata that describes the data's coordinate
+system.  The name ``instrument'' is not defined; therefore, one is
+free to use this name to mean what is necessary for the particular
+application with no restrictions on its type.
+<P>
+Use of the ``schema'' metadatum suggests that a <TT>Metadata</TT> object can
+be governed by only one schema at a time.  This is a good idea because
+two schemas can use the same metadatum name but define them to have
+different types and different meanings.  However, the ``horizon''
+schema allows one to hold metadata defined by other schema through the
+use of the ``NativeSchema'' and ``SchemaSet'' metadata (see
+Appendix&nbsp;<A HREF="node39.html#AhorizonSchema">A.2</A> for details).  For example, an
+application may need or prefer to deal directly with metadata of
+another schema (say the one used by the native format) instead of the
+horizon equivalents (if they exist).
+<P>
+Schemata have a way of evolving over time, so our design also includes
+the reserved name, ``schemaVersion''.  This is also defined to be of
+type <TT>String</TT> containing an identification of the version of the schema
+definition being used.  To help encourage type-safety for the
+``schema'' and ``schemaVersion'' metadata (that is, to make sure their
+values are saved as type <TT>String</TT>), two methods are provided for
+setting their values: <TT>setSchema(String)</TT> and
+<TT>setSchemaVersion(String)</TT>.
+<P>
+<HR><A NAME="tex2html178" HREF="node7.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html176" HREF="node5.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html170" HREF="node5.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html180" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html179" HREF="node7.html">Possible Pitfalls and Safety </A>
+<B>Up:</B> <A NAME="tex2html177" HREF="node5.html">The Horizon Metadata Class</A>
+<B> Previous:</B> <A NAME="tex2html171" HREF="node5.html">The Horizon Metadata Class</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The ImageDisplayMap Class</TITLE>
+<META NAME="description" CONTENT="The ImageDisplayMap Class">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html502" HREF="node34.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html500" HREF="node32.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html494" HREF="node32.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html504" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html503" HREF="node34.html">Configuring the ImageDisplayMap Object</A>
+<B>Up:</B> <A NAME="tex2html501" HREF="node32.html">The Viewer: Getting and </A>
+<B> Previous:</B> <A NAME="tex2html495" HREF="node32.html">The Viewer: Getting and </A>
+<BR> <P>
+<H3><A NAME="SECTION00051100000000000000">The <TT>ImageDisplayMap</TT> Class</A></H3>
+<P>
+The input to the <TT>Viewable</TT> class's <TT>displaySlice()</TT> method
+is, of course, a <TT>Slice</TT> object.  This indicates the rectangular
+region within the dataset that the user is interested in viewing.
+More often than not, the area in data pixels of the requested region
+will be different from the area available for display.  For instance,
+the user may request a 1024-squared region of data; however, the
+viewer's display size (as returned by <TT>getDisplaySize()</TT>) may
+only be 256-squared.  As a result, when the data is displayed, the
+region may get sub-sampled to fit within the available space.  
+To get a coordinate postion, we need to know a points location in the
+dataset, which is different from the location in the
+display.<A NAME="tex2html11" HREF="footnode.html#690"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A>  The position associated with mouse-move events is a
+display pixel; unfortunately, we need data voxel positions in order to
+get coordinate positions.  Thus, another transformation is needed.
+<P>
+The <TT>ImageDisplayMap</TT><A NAME="tex2html12" HREF="footnode.html#596"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A> handles the conversion from display pixels to data voxels (and
+back when necessary).  To configure this transformation, it requires
+two objects: the <TT>Slice</TT> being displayed and a <TT>Rectangle</TT>
+representing the region of the display area to which the image is
+being painted.
+<P>
+<TT>ImageDisplayMap</TT> also provides two more parameters as public
+boolean fields, <TT>xaxisReversed</TT> and <TT>yaxisReversed</TT>, that
+can effect the translation.  Normally, it is assumed that data will
+displayed such that the dataset positions increase left to right and
+top to bottom, reflecting the order that data is arranged within the
+dataset.  This is the convention used for common computer graphics
+images like GIF and JPEG; that is, the origin of the image appears in
+upper left-hand corner of the display.  A value of true for the
+<TT>xaxisReversed</TT> indicates that the dataset positions increase
+right to left.  The <TT>yaxisReversed</TT> applies in similar way to the
+vertical direction.  With FITS images, it is common practice to order
+the data assuming that it will be displayed with data positions
+increasing right to left and <em>bottom to top</em> (i.e. the origin is
+in the lower left-hand corner).  Thus, when displaying FITS images,
+these boolean fields should be set to <TT>xaxisReversed=false</TT> and
+<TT>yaxisReversed=true</TT>.
+<P>
+In summary, converting a position pointed to by the mouse involves two
+basic transformations: one going from display pixels to data voxels,
+and one going from data voxels to coordinate positions.
+<P>
+<HR><A NAME="tex2html502" HREF="node34.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html500" HREF="node32.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html494" HREF="node32.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html504" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html503" HREF="node34.html">Configuring the ImageDisplayMap Object</A>
+<B>Up:</B> <A NAME="tex2html501" HREF="node32.html">The Viewer: Getting and </A>
+<B> Previous:</B> <A NAME="tex2html495" HREF="node32.html">The Viewer: Getting and </A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

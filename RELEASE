@@ -1,0 +1,46 @@
+Release Notes
+
+New to 1.3beta
+--------------
+
+o  This package now contains a basic FITS reader.  This reader is
+   limited, however, as it stores all the data from the image in
+   memory.  Consequently, large or multiple images can eat up the 
+   available memory pretty quickly, especially when running as an
+   applet. 
+
+o  New sub-package: ncsa.horizon.data.  This package contains classes
+   for direct access and manipulation of data in a format-independent
+   and type-safe way.  
+
+o  New control panels for spreadsheet display, slice selection,
+   transfer function editing, palette selection.  
+
+o  Sub-package interdependencies:  here we note which sub-packages
+   depend on each other, so that if one wants to use just one or a few
+   of the classes, one can determine what other packages might also be
+   needed:
+   + ncsa.horizon.util:  does not depend on any of the other
+       sub-packages and thus can be used independently of them in
+       "non-Horizon" applications.
+   + ncsa.horizon.awt:  currently does not depend on any of the other 
+       sub-packages (though this could change in the future).
+   + ncsa.horizon.coordinates:  depends only on ncsa.horizon.util
+   + all other packages (including ncsa.horizon.awt.image) contain 
+       various inter-dependencies and in general cannot be used
+       without all of the Horizon sub-packages.  
+
+o  changes to new Viewable interface:  
+   +  new method: getDefaultSlice()
+   +  updated methods:  getData(), getData(Volume) now returns object 
+      of the NdArrayData
+
+o  new classes for line selection:  ncsa.horizon.awt.LineSelection
+   (which is analogous to Point and Rectangle).  
+
+o  The data subset selection classes--Volume, Slice, Segment, and
+   Voxel--have be overhauled to remove support for "firstAxisIndex".
+   Voxel has new method: untranslate().  
+
+o  a variety of bug fixes, enhancements, and new features.  
+

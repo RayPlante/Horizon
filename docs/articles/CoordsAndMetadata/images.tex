@@ -1,0 +1,735 @@
+\batchmode
+		    \documentclass[12pt]{article}
+\makeatletter
+\usepackage{html,epsfig,supertabular}
+\usepackage{smartspace}
+
+\textheight 9in
+\textwidth 6.5in
+\topmargin -0.5in
+\oddsidemargin 0in
+\evensidemargin 0in
+
+
+
+
+
+
+
+\title{Supporting Metadata and Coordinate Systems for Scientific Data 
+ 	in the Horizon Java Package}
+\author{Raymond L. Plante \\ 
+	National Center for Supercomputing Applications\\ 
+	University of Illinois\\ 
+	405 North Mathews Ave.\\ 
+	Urbana, IL 61801, USA\\ 
+	{\tt horizon@ncsa.uiuc.edu}}
+
+
+\newcommand {\code}[1]{\mbox{\tt #1}}
+
+\newcommand {\mdvalue}[1]{\mbox{\tt #1}}
+
+\newcommand {\mdname}[1]{\mbox{\bf #1}}
+
+\makeatother
+\newenvironment{tex2html_wrap}{}{}
+\newwrite\lthtmlwrite
+\def\lthtmltypeout#1{{\let\protect\string\immediate\write\lthtmlwrite{#1}}}%
+\newbox\sizebox
+\textheight 50cm
+\begin{document}
+\pagestyle{empty}
+\stepcounter{section}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{subsection}
+\stepcounter{subsection}
+{\newpage\clearpage\samepage
+\begin{table}\label{T:mrstat}
+
+\begin{tabular}{|lrp{0.5\textwidth}|}
+\hline
+Status name                      & Value & Description   \\  \hline
+\mbox{\tt Metarunner.OK}             & 0     & Value successfully fetched \\ 
+ 			     
+\mbox{\tt Metarunner.RUN\_PROBLEM}   & 1     & An error of some kind was 
+                                          encountered; however, a usable or 
+                                          default value was returned.  This 
+                                          usually means that future requests 
+                                          for this value should try the
+                                          \mbox{\tt Metarunner} again.  \\ 
+ 			     
+\mbox{\tt Metarunner.THREAD\_FAILED} & 2     & An error initiating or completing a
+                                          thread was encountered. \\ 
+ 
+\mbox{\tt Metarunner.RUN\_FAILED}    & 3     & A general error was encountered. \\  
+\hline
+\end{tabular}
+\end{table}}\hbox{}\vfil
+
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+{\newpage\clearpage\samepage
+\begin{table}\label{T:axisMd}
+
+\begin{tabular}{|llp{0.5\textwidth}|}
+\hline
+Metadatum name & value type & definition \\  \hline
+axisSchema  & String &  set of metadata used to define an axis; 
+                        ``referenced'' indicates that the metadata
+                        listed below are in use \\ 
+	       	    
+name        & String &  an identfier indicating what the axis
+                        measures \\ 
+	       	    
+label       & String &  a label to be used when displaying positions
+                        along this axis \\ 
+	       	    
+type        & String &  the type of axis; currently supported values
+                        include ``linear'', ``longitude'', and
+                        ``latitude''. \\ 
+	       	    
+refposition & Double &  the reference position along the axis within
+                        the dataset that has the coordinate position
+                        given by the ``refvalue'' metadatum. \\ 
+
+refvalue    & Double &  the coordinate position along the axis
+                        corresponding to the reference position
+                        given by the ``refposition'' metadatum. \\ 
+
+stepsize    & Double &  the width of a data voxel along the axis in
+                        units of the coordinate system at the coordinate
+                        position of the reference voxel. \\ 
+
+refoffset   & Double &  an extra offset (usually between -1.0 and
+                        1.0) indicating the exact point within the
+                        reference voxel that the reference position
+                        applies.  \\ 
+
+formatter   & AxisPosFormatter & a formatting object to be used for
+                        displaying coordinate positions for this
+                        axis  \\  \hline
+\end{tabular}
+\end{table}}\hbox{}\vfil
+
+{\newpage\clearpage\samepage
+\begin{table}\label{T:formatters}
+
+\begin{tabular}{|lp{0.4\textwidth}l|}
+\hline
+Class name              & description of format            & Example Output \\ 
+\hline
+GenericAxisPosFormatter & simple double formatting         & 134.12 \\ 
+
+DDMMSSAxisPosFormatter  & \raggedright 
+                          degrees:minutes:seconds            
+                          format, range: [-90, 90]         & 24:15:31.2 \\ 
+
+CDDMMSSAxisPosFormatter & \raggedright 
+                          circular degrees:minutes:seconds,  
+                          range: [0, 360)                  & 135:54:46.8 \\ 
+
+HHMMSSAxisPosFormatter  & time format, range [0, 24)       & 14:26:39.4  \\ 
+
+FreqAxisPosFormatter    & \raggedright 
+                          double formatting appended by
+                          a metric frequency unit          & 115.27 GHz \\ 
+
+\hline
+\end{tabular}
+\end{table}}\hbox{}\vfil
+
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{paragraph}
+\stepcounter{subsection}
+\stepcounter{section}
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsubsection}
+\stepcounter{subsection}
+\appendix
+\stepcounter{section}
+{\newpage\clearpage\samepage
+\begin{supertabular}{lllp{4.475in}}
+\multicolumn{3}{l}{\mbox{\bf MetadatumName
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright the metadatum's type
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright a statement of what the value of the metadatum represents
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright one or more possible values (appearing in the \mbox{\tt code
+          font}) or a description of possible values (appearing in 
+          normal font
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Supported Values: } & {\raggedright a list of values currently supported by the Horizon
+	  package.  Next to each value is a definition of what the
+	  value indicates.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright comments on how the Horizon package does (does not) use this
+	  metadatum
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright helpful notes about the metadatum, often to further explain
+	  the intended use for the metadatum.
+ \smallskip} \\ 
+
+\end{supertabular}}\hbox{}\vfil
+
+\stepcounter{subsection}
+{\newpage\clearpage\samepage
+\begin{supertabular}{lllp{4.475in}}
+
+\multicolumn{3}{l}{\mbox{\bf schema
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the name of the schema to be used for interpreting the
+         metadata in the current list
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright \mbox{\tt horizon}, \mbox{\tt FITS}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright some Horizon classes check this when critical metadata appear
+	 to be missing.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright this suggests the existance of a metadata dictionary, format
+         standard, or otherwise assumed convention for the meaning of
+	 keywords and value types
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf schemaVersion
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the version of the schema standard that the metadata conform
+         to
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright \mbox{\tt 1.2alpha}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright Horizon classes do not currently check this value.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright There is no standard format assumed for this string.
+
+ \smallskip} \\ 
+
+\end{supertabular}}\hbox{}\vfil
+
+\stepcounter{subsection}
+\stepcounter{subsubsection}
+{\newpage\clearpage\samepage
+\begin{supertabular}% latex2html id marker 1313
+{lllp{4.475in}}
+
+\multicolumn{3}{l}{\mbox{\bf comment
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright any message about the data
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright If the underlying data is represented by a Java \mbox{\tt Image}
+	 object, this metadatum could hold the value of the
+	 ``comment'' property.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright not consulted
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright It is not recommend that this metadatum contain any
+	 information that should be interpreted by an object; rather
+	 it is intended for information that might simply be displayed
+	 for and interpreted by a human.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf CoordinateSystem
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Metadata}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the collection of metadata used to describe the World
+	 Coordinate System within which the data exists.  If not
+	 present, a simple pixel-based coordinate system can be
+	 assumed.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright the \mbox{\tt ncsa.horizon.coordinates} package relies on the
+	 metadata stored in this list for displaying world coordinate
+	 positions.  See Appendix~\ref{A:cmlex} for the list of
+	 defined metadata names which can be stored in this list
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright See \S\ref{S:WCS} for a discussion of how the metadata stored
+	 in this list are used to create \mbox{\tt CoordinateSystem} objects.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf dataVolume
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Volume}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the volume of data space within which this dataset contains
+	 data.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright this metadatum not only can indicate the size of the dataset
+	 (i.e. the number of data voxels along each axis), but also 
+	 can indicate the index of the first element.  This might be 
+	 useful if the native format uses one-relative indexing
+	 convention (i.e. where the first element in an array is
+	 indexed as 1).  
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf defaultSlice
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Slice}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright a suggested portion of the data to image when one has no
+	 particular preference or when one wants representative view
+	 of the data.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright Because a \mbox{\tt Slice} object is updatable, it is not
+	 recommended that one save a ``raw'' \mbox{\tt Slice} in a
+	 Metadata list; rather, wrap it in an \mbox{\tt ObjectCloner} and
+	 save it as a \mbox{\tt Metarunner} object.  
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf measurementUnit
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the name of the unit that the image data values are measured
+	 in.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright For some datasets, like most GIF and JPEG images, it is not
+	 appropriate to set this metadatum; for others, the unit may
+	 not be known and therefore would not be be provided.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf NativeSchema
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Metadata}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the dataset metadata using the schema native to format
+	 that the data was originally stored in
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright If the image was read from a FITS file, this could contain
+	 header keywords and values taken from the FITS header
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright not currently used
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright this metadatum allows clients access to both horizon-schema
+	 metadata and native metadata simultaneously via a reference
+	 to a single \mbox{\tt Metadata} object.  
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf naxes
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.Integer}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the number of axes in the data space
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright not currently used (see also \mbox{\bf CoordinateSystem.naxes}
+	 which is used.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf SchemaSet
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Metavector} containing elements of type
+	 \mbox{\tt ncsa.horizon.util.Metadata} 
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright an array of metadata lists with each list using a different
+	 schema
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright not currently used
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf title
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright a title for the dataset
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright This could be displayed in a Frame's title bar or above a
+	 Viewer display window.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf URLs
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Metadata} containing String values.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright a list of Universal Resource Locator (URL) strings that can
+	 be used to obtain portions of or information about this data.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf xaxisReversed
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright {\tt java.lang.Boolean}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright if true, it is recommended that during visualization the 
+	 data be ordered along the horizontal axis such that voxel
+	 positions increase from right to left; if false, they should 
+	 increase left to right; if this metadatum is not present,
+	 a default value of false is recommended.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright \mbox{\tt SelectionViewers} should check for the value of this
+	 metadatum as it it reflects the order in which the data is
+	 arranged when their client \mbox{\tt Viewable}s produce Java
+	 \mbox{\tt Image}s for display.  This value is usually passed to a
+	 \mbox{\tt ImageDisplayMap} object that keeps track of how data
+	 visualations get mapped to on-screen displays.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright The convention for displaying common computer graphics images
+	 as well as scientific images is for $x$-axis positions to 
+	 increase left to right.  The value often reflects the
+	 convention of the format used to store the
+	 data---specifically, the order the data appears in the
+	 original file or stream.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf yaxisReversed
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright {\tt java.lang.Boolean}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright if true, it is recommended that during visualization the 
+	 data along the vertical axis be ordered such that voxel
+	 positions increase from bottom to top; if false, they should 
+	 increase top to bottom; if this metadatum is not present,
+	 a default value of false is recommended.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright \mbox{\tt SelectionViewers} should check for the value of this
+	 metadatum as it it reflects the order in which the data is
+	 arranged when their client \mbox{\tt Viewable}s produce Java
+	 \mbox{\tt Image}s for display.  This value is usually passed to a
+	 \mbox{\tt ImageDisplayMap} object that keeps track of how data
+	 visualations get mapped to on-screen displays.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright The convention for displaying common computer graphics images
+	 is for $y$-axis positions to increase top to bottom.  On the
+	 other hand, it is customary to have the data origin appear in
+	 the lower left corner of the display such that $y$-axis
+	 positions to increase bottom to top.  
+
+ \smallskip} \\ 
+
+\end{supertabular}}\hbox{}\vfil
+
+\stepcounter{subsubsection}
+{\newpage\clearpage\samepage
+\begin{supertabular}% latex2html id marker 1539
+{lllp{4.475in}}
+
+\multicolumn{3}{l}{\mbox{\bf name
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright a name to be given to this world coordinate space
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright this can contain any text and is not expected to be
+	 interpreted by any client object.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf Axes
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Metavector} containing elements of type
+	 \mbox{\tt ncsa.horizon.util.Metadata} 
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright each element contains the metadata that is relevant to one
+	 axis of the coordinate system
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright This metadatum plays a central role in creating
+	 \mbox{\tt CoordinateSystem} instances; specifically, it is to determine
+	 how \mbox{\tt CoordTransform} objects should be applied to convert
+	 between data voxels and coordinate postions.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright see Appendix~\ref{A:cmlex-ax} for a list of defined
+	 \mbox{\bf Axes} sub-metadata.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf naxes
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.Integer}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the number of axes in the coordinate system
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright heavy
+	 
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf projection
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright a string representing the type of projection type used to map
+	 a spherical coordinate system onto the plane of the dataset.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright used by the \mbox{\tt LinSphCoordinateSystem} to support
+	 spherical coordinate systems.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Supported Values: } & {\raggedright see \mbox{\tt FITSWCS.ProjectionType} for the list of currently
+	 supported projection types.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright the supported types are taken from the proposed FITS standard
+	 for World Coordinate Systems and implemented using the
+	 FITSWCS Java package.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf ProjectionParameters
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Metavector} containing elements of type
+	 \mbox{\tt java.lang.Double}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright an array of parameters needed to define the projection used
+	 to map a spherical coordinate system to a plane of the
+	 dataset; the number and logical meaning of the paramters are
+	 set by the value of \mbox{\bf projection}.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright used by the \mbox{\tt LinSphCoordinateSystem} to support
+	 spherical coordinate systems.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright the projections are supported via the FITSWCS Java package;
+	 consult the documentation for the particular
+	 \mbox{\tt Projection} class of interest in the
+	 \mbox{\tt FITWCS.projections} subpackage to find out what
+	 parameters are needed.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf SkewRotate
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.util.Metavector} containing elements of type
+	 \mbox{\tt java.lang.Double}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the skew and rotation matrix needed to transform data voxel
+	 positions to coordinate positions when the data set axes are
+	 not aligned with the coordinate system axes; the array should
+	 contain $n$ by $n$ elements where $n$ is the value of
+	 \mbox{\bf naxes} and should be ordered row by row.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright this is used by the \mbox{\tt SkewRotateCoordTransform}.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf velocityStandard
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the velocity standard that applies to all of the axes that
+	 do not otherwise specify a specific standard
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright "LSR", "HEL", "OBS"
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright this is used by astronomical images that transform
+	 frequencies into Doppler velocities
+
+ \smallskip} \\ 
+
+\end{supertabular}}\hbox{}\vfil
+
+\stepcounter{subsubsection}
+{\newpage\clearpage\samepage
+\begin{supertabular}{lllp{4.475in}}
+
+\multicolumn{3}{l}{\mbox{\bf axisSchema
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the name of subset of metadata names used to describe this
+	 axis.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Supported Values: } & \\ 
+ & &  {\tt referenced} & {\raggedright   axis is parameterized by mapping a
+				reference voxel to a reference
+				coordinate position and giving a voxel
+				size; impies the use of
+				\mbox{\bf refposition}, \mbox{\bf refvalue}, 
+				\mbox{\bf refoffset}, and \mbox{\bf stepsize}
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf formatter
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt ncsa.horizon.coordinates.AxisPosFormatter}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the object to be used when printing positions along this axis
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright The \mbox{\tt HHMMSSAxisPosFormatter} will print values out in
+	 hours:mintues:seconds format, while the
+	 \mbox{\tt FreqAxisPosFormatter} prints values as floating-point
+	 numbers appended by a metric frequency unit (e.g. "kHz").
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright used heavily. When not provided, clients usually use
+	 \mbox{\tt GenericAxisPosFormatter}. 
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright Some \mbox{\tt AxisPosFormatter} objects are not updatable, and
+	 so can safely be included in a \mbox{\tt Metadata} object; others are
+	 not and should be wrapped in a \mbox{\tt ObjectCloner} and stored
+	 as \mbox{\tt Metarunner}.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf label
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the preferred string to display for labelling an axis.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright while an axis may have the \mbox{\bf name} "Right Ascension",
+	 the \mbox{\bf label} might be set to "R.A." for brevity.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright \mbox{\tt CoordinateSystem} and \mbox{\tt CoordPos} objects will
+	 check the value of this metadatum when clients request an
+	 axis label for display; if it is not set, the value of
+	 \mbox{\bf name} is usually returned.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright The value of this should not be used to identify an axis or
+	 otherwise be interpreted by an object; it is meant for
+	 display and human interpretation.  See also \mbox{\bf name}.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf name
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright a string that identifies this axis
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright "altitude", "frequency", "longitude"
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright see Table
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright The value is meant to be interpreted by an object when
+	 necessary.  For instance, a specialized \mbox{\tt CoordTransform}
+	 object may be meant to be applied to only certain kinds of
+	 axes, and when they are attached to a \mbox{\tt CoordinateSystem}
+	 without explicit constraints, this value need to be consulted
+	 as a way of determining if the transform can be applied.  For
+	 example, the \mbox{\tt CelToGalCoordTransform} will look for axes
+	 called "Right Ascension" and "Declination".  See also
+	 \mbox{\bf type}. 
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf refposition
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.Double}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright used when \mbox{\bf =}``referenced'' giving the position within the
+	 dataset along this axis that will be used as a reference
+	 position; the coordinate position corresponding to this data 
+	 position is given by \mbox{\bf refvalue}. 
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright many \mbox{\tt CoordinateSystem} and \mbox{\tt CoordTransform} classes rely on
+	 this value
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright See also \mbox{\bf refvalue}, \mbox{\bf refoffset}, and
+	 \mbox{\bf stepsize}. 
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf refvalue
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.Double}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright used when \mbox{\bf axisSchema}=``referenced'' giving the position within the
+	 coordinate system along this axis that will be used as a reference
+	 position; the data position corresponding to this coordinate 
+	 position is given by \mbox{\bf refposition}. 
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright many \mbox{\tt CoordinateSystem} and \mbox{\tt CoordTransform} classes rely on
+	 this value
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright See also \mbox{\bf refposition}, \mbox{\bf refoffset}, and
+	 \mbox{\bf stepsize}. 
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf refoffset
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.Double}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright used when \mbox{\bf axisSchema}=``referenced'' giving the offset (usually
+	 $< 0.5$) from the reference data position along this axis
+	 (\mbox{\bf refposition}) that the reference coordinate position
+	 (\mbox{\bf refvalue}) corresponds to.  The default value of 0
+	 indicates that the \mbox{\bf refvalue} corresponds to the
+	 center of the data voxel width along this axis.  A value of
+	 -0.5 indicates the \mbox{\bf refvalue} corresponds to the
+	 beginning (toward the origin) of the data voxel; +0.5, to the
+	 end (away from the origin) of the data voxel.
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright many \mbox{\tt CoordinateSystem} and \mbox{\tt CoordTransform} classes rely on
+	 this value
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright While this is meant to address differing conventions of which
+	 part of a reference voxel the reference coordinate position
+	 corresponds to, it can be used for any purpose requiring a
+	 correction to the nominal referenve voxel and coordinate.  It
+	 might in some cases be useful for correcting for the data
+	 indexing convention (i.e. where the first voxel on an axis is
+	 zero or one).	 See also \mbox{\bf refposition},
+	 \mbox{\bf refvalue}, and \mbox{\bf stepsize}. 
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf stepsize
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.Double}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright used when \mbox{\bf axisSchema}=``referenced'' giving the width
+         of the data voxel along this axis at the position of the 
+	 reference and in the units of the coordinate system.  
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Horizon Use: } & {\raggedright many \mbox{\tt CoordinateSystem} and \mbox{\tt CoordTransform} classes rely on
+	 this value
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright This width only applies at the reference voxel; if the axis
+	 is non-linear, the voxel width can change as one moves away
+	 from the reference position.  See also \mbox{\bf refposition},
+	 \mbox{\bf refvalue}, and \mbox{\bf refoffset}. 
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf type
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the general type of the axis
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Supported Values: } & \\ 
+ & &  {\tt linear} & {\raggedright     axis is a basic linear one
+	 } \\ 
+ & & {\tt longitude} & {\raggedright  the north-south axis of a spheical system
+	 } \\ 
+ & & {\tt latitude} & {\raggedright   the east-west axis of a spheical system
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright The value is meant to be interpreted by an object when
+	 necessary.  For instance, a specialized \mbox{\tt CoordTransform}
+	 object may be meant to be applied to only certain kinds of
+	 axes, and when they are attached to a \mbox{\tt CoordinateSystem}
+	 without explicit constraints, this value need to be consulted
+	 as a way of determining if the transform can be applied.  For
+	 example, the \mbox{\tt SphericalCoordTransform} will look for
+	 axes called "Right Ascension" and "Declination".  See also
+	 \mbox{\bf name}.
+
+ \bigskip} \\ 
+\multicolumn{3}{l}{\mbox{\bf velocityStandard
+}} \\ 
+& \multicolumn{2}{l}{\it Type: } & {\raggedright \mbox{\tt java.lang.String}
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Definition: } & {\raggedright the velocity standard that applies to this axis
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Example Values: } & {\raggedright "LSR", "HEL", "OBS"
+ \smallskip} \\ 
+& \multicolumn{2}{l}{\it Comments: } & {\raggedright this is used by astronomical images that transform
+	 frequencies into Doppler velocities.  
+
+
+ \smallskip} \\ 
+
+\end{supertabular}}\hbox{}\vfil
+
+\stepcounter{section}
+
+\clearpage
+\end{document}

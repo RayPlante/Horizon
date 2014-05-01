@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Implementing New CoordTransform Classes</TITLE>
+<META NAME="description" CONTENT="Implementing New CoordTransform Classes">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html406" HREF="node26.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html404" HREF="node22.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html400" HREF="node24.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html408" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html407" HREF="node26.html">getInAxes()getOutAxes()</A>
+<B>Up:</B> <A NAME="tex2html405" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html401" HREF="node24.html">Use Outside of a </A>
+<BR> <P>
+<H3><A NAME="SECTION00043300000000000000">Implementing New <TT>CoordTransform</TT> Classes</A></H3>
+<P>
+If you want to create new tranform classes that may be attached to
+a coordinate system, you should extend the abstract <TT>CoordTransform</TT>
+class.  At a minimum, the only methods that you will need to implement
+are the four <TT>forward()</TT> and <TT>reverse()</TT> methods.  This is
+usually the case when it does not matter how many axes there are in
+the input position and what order they are in.  In this case, the
+default Axis Index List that <TT>forward(doub[])</TT> and
+<TT>reverse(double[])</TT> methods is usually just <TT>{0, 1, 2
+..}</TT>, up to the length of the input position.
+<P>
+Suppose however that your transform should only be applied to certain
+axes, such as longitude and latitude.  Then, you may need to consider
+overriding the default implemations of other <TT>CoordTransform</TT> methods.
+Before you do, you should first define for your class what kinds of
+axes your transform will need to operate on and in what default order
+you should expect them to be in.  For instance, you may assume that by
+default, the first axis will be longitude and the second axis will be
+latitude.  In the paragraphs below, we examine in order the methods
+you may need to override.
+<P>
+<BR> <HR>
+<UL><A NAME="CHILD_LINKS">&#160;</A>
+<LI> <A NAME="tex2html409" HREF="node26.html#SECTION00043310000000000000"><TT>getInAxes(), getOutAxes()</TT></A>
+<LI> <A NAME="tex2html410" HREF="node27.html#SECTION00043320000000000000"><TT>determineConstraints(Metadata in, boolean forwards)</TT></A>
+<LI> <A NAME="tex2html411" HREF="node28.html#SECTION00043330000000000000"><TT>init(CoordinateSystem csys, boolean forward, int[]
+                 axisIndexList)</TT></A>
+<LI> <A NAME="tex2html412" HREF="node29.html#SECTION00043340000000000000"><TT>getMetadata(Metadata in, boolean forward, int[] axisIndices)</TT></A>
+</UL>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

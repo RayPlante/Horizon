@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>getInAxes(), getOutAxes()</TITLE>
+<META NAME="description" CONTENT="getInAxes(), getOutAxes()">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html421" HREF="node27.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html419" HREF="node25.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html413" HREF="node25.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html423" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html422" HREF="node27.html">determineConstraints(Metadata inboolean forwards)</A>
+<B>Up:</B> <A NAME="tex2html420" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<B> Previous:</B> <A NAME="tex2html414" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<BR> <P>
+<H4><A NAME="SECTION00043310000000000000"><TT>getInAxes(), getOutAxes()</TT></A></H4>
+<P>
+These methods return the minimum number of axes that are needed in an
+input position and returned in an output position.  For the forward
+transform, <TT>getInAxes()</TT> returns the number of axes needed in the
+input position given to <TT>forward()</TT>.  This number is also the
+number of axes returned in the output position from the
+<TT>reverse()</TT> method.  Likewise, <TT>getOutAxes()</TT> returns the
+number of output axes returned by the <TT>forward()</TT>, which is the
+same number of axes required in the input position to
+<TT>reverse()</TT>.  These methods can be called as a way of determining
+if the transform can be applied to a position or system.  If the
+number of axes is less than these numbers, the transform cannont be
+applied.  By default, both methods return zero; that means that given
+an empty Axis Index List, a position will legally pass through the
+transform method unchanged.  A transform that operates on longitude
+and latitude would usually return 2 as the minimum number of required
+axes.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

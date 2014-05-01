@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>On-Demand Data Loading: The Horizon Metarunner Class</TITLE>
+<META NAME="description" CONTENT="On-Demand Data Loading: The Horizon Metarunner Class">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html252" HREF="node14.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html250" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html246" HREF="node12.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html254" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html253" HREF="node14.html">The World Coordinate System </A>
+<B>Up:</B> <A NAME="tex2html251" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html247" HREF="node12.html">Handling Arrays: The Horizon </A>
+<BR> <P>
+<H2><A NAME="SECTION00035000000000000000">On-Demand Data Loading: The Horizon <TT>Metarunner</TT> Class</A></H2>
+<P>
+<A NAME="SMetarunner">&#160;</A>
+<P>
+In principle, there is no limit on the amount of data that can be
+stored within a <TT>Metadata</TT> object.  In fact, data files containing FITS
+or HDF formatted data often contain quite a bit of metadata.  It may
+be expensive to load all the data into the <TT>Metadata</TT> object,
+especially if the data must be obtained from the network.  If the user
+ends up requesting only a few of the metadata elements, loading
+all of the data would be quite a waste.  However, one may not know
+ahead of time which data will be requested.  To help with this dilemma
+is a special metadatum class called <TT>Metarunner</TT>.
+<P>
+An implementation of the Runnable interface, the <TT>Metarunner</TT> class has
+the job of obtaining a metadatum value on demand.  If one has a piece of
+metadata that is expensive to load, instead of loading the actual
+value, one loads instead a <TT>Metarunner</TT> object for that metadatum.
+When a client object requests the metadatum, the <TT>Metadata</TT> object
+first looks for a static value in the usual way; if none exists, it
+will call on the <TT>Metarunner</TT> to fetch and return the value.  The
+<TT>Metadata</TT> object will remember the value for the next time it is
+requested.
+<P>
+To clients of <TT>Metadata</TT> objects, use of <TT>Metarunner</TT>s is completely
+transparent; users may not realize that this dynamic loading is taking
+place.  <TT>Metarunner</TT>'s are usually only dealt with when loading
+<TT>Metadata</TT> lists.  A <TT>Metarunner</TT> is usually designed for a specific
+metadatum or set of metadata that are all fetched in the same way.  To
+do so, one must sub-class the <TT>Metarunner</TT> class and override the
+<TT>getDatum()</TT> method.  This method returns a <TT>ValueAndStatus</TT>
+object, containing an <TT>Object</TT> to hold the value and an <TT>int</TT> to
+hold the status.  The possible status values should include the values
+defined by the <TT>Metarunner</TT> class which are listed in
+Table&nbsp;<A HREF="node13.html#Tmrstat">2.5</A>.  The sub-class may support additional error
+codes; however, all error codes greater than or equal to 2 should
+indicate that the value returned is invalid.
+<P>
+<P><A NAME="675">&#160;</A><A NAME="Tmrstat">&#160;</A><BR>
+<STRONG>Table 1:</STRONG> <TT>Metarunner</TT> Status Values<BR>
+<P>
+<P>
+To have a <TT>Metadata</TT> use the <TT>Metarunner</TT>, one should save the
+<TT>Metarunner</TT> in the list using the name of metadatum it fetches
+appended by the value of string <TT>Metadata.METARUNNER_TAG</TT>
+(``:Metarunner'').  When the a client requests the metadata for the
+first time, the primary list will not contain a value.  At this point,
+the <TT>Metadata</TT> object will look for the existance of an associated
+<TT>Metarunner</TT>.  If it finds a <TT>Metarunner</TT>, it runs it and saves the
+result into the primary list.  The <TT>Metarunner</TT> will only get rerun if
+the first attempt failed to produce a good value (i.e. error status
+equal to <TT>Metarunner.OK</TT>).
+<P>
+In general, the <TT>Metarunner</TT> class offers the user several ways to
+fetch and return a value:  
+<UL>
+<LI> call the <TT>getDatum</TT> method directly.
+<LI> call the <TT>run</TT> method, then call <TT>getLastValue</TT>.
+<LI> call the static <TT>fetchDatum</TT> method (equivalent to the
+      previous 2-step procedure).
+<LI> pass this object as a Runnable to a Thread, execute the Thread,
+      wait for it to finish, and then call <TT>getLastValue</TT>. 
+</UL>
+If <TT>run</TT> completes without interruption, then an internally
+stored run counter (accessible via <TT>getRunCount()</TT>) is
+incremented and the error state is updated.  If <TT>getDatum()</TT>
+returns with a state of <TT>OK</TT> or <TT>RUN_PROBLEM</TT>, the value is
+stored internally for access via getLastValue().  The <TT>Metadata</TT> class
+calls the <TT>fetchDatum</TT> method when it needs to turn to a
+<TT>Metarunner</TT> to obtain a value; it remembers the result only if the
+error status is equal to OK.
+<P>
+One example of a <TT>Metarunner</TT> class used by the Horizon package
+is the <TT>ObjectCloner</TT>.  This class is used to protect updatable
+classes being stored in <TT>Metadata</TT> list, such as ``defaultSlice''
+(of the horizon schema, see App.&nbsp;<A HREF="node39.html#AhorizonSchema">A.2</A>).  The
+<TT>getDatum()</TT> method simply returns a clone of another object the
+<TT>ObjectCloner</TT> has stored internally as a protected field and
+which was set at construction.  This object is stored as a
+<TT>Metarunner</TT> object in place of the metadatum itself.
+Furthermore, the <TT>ObjectCloner</TT>'s <TT>getDatum()</TT> method always
+returns a status of <TT>RUN_PROBLEM</TT> upon successful completion;
+this prevents the <TT>Metadata</TT> list from saving the updatable
+object by itself afterward and ensures that the <TT>ObjectCloner</TT>
+will always get called the next time the client requests the metadatum
+value.
+<P>
+<HR><A NAME="tex2html252" HREF="node14.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html250" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html246" HREF="node12.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html254" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html253" HREF="node14.html">The World Coordinate System </A>
+<B>Up:</B> <A NAME="tex2html251" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html247" HREF="node12.html">Handling Arrays: The Horizon </A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

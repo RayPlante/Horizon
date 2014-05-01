@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Motivation and Context</TITLE>
+<META NAME="description" CONTENT="Motivation and Context">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html119" HREF="node3.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html117" HREF="CoordsAndMetadata.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html111" HREF="node1.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html121" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html120" HREF="node3.html">The Horizon Metadata Model</A>
+<B>Up:</B> <A NAME="tex2html118" HREF="CoordsAndMetadata.html">Supporting Metadata and Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html112" HREF="node1.html">Contents</A>
+<BR> <P>
+<H1><A NAME="SECTION00020000000000000000">Motivation and Context</A></H1>
+<P>
+<A NAME="Sintro">&#160;</A>
+<P>
+A general character of scientific data is that they represent
+measurements or estimates of some physical quantity (e.g.
+temperature, brightness, voltage, magnetic field, etc.).  The
+measurements are made under certain quantifiable conditions, some of
+which may be made to vary.  For example, one might measure temperature
+over a range of pressures or brightness from different positions
+within an area of the sky.  Thus, the data have a context, or in
+mathematical terms, a domain which provides them with relevance.  This
+context can be described as a multidimensional space in which each
+axis is a quantifiable parameter describing the condition under which
+each measurement was made.  If the space is well-defined (i.e. its
+axes are orthogonal), then each datum can be mapped to a single
+position within that space.  This domain space is often referred to as
+the data's <em>world coordinate system</em>.
+<P>
+The Horizon Image Data Browser Java package supports a special type of
+scientific data it refers to as an <em>image</em>.  In a scientific
+context, an image is a set of data that regularly samples a volume of
+<I>N</I>-dimensional space.<A NAME="tex2html1" HREF="footnode.html#21"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A>  Data points that make up
+an image are often referred to as pixels; this term, however,
+connatates two dimensions, so to reflect the <I>N</I>-dimensional nature
+of the data, the more general term of <em>voxel</em> will be used
+instead.  Within a computer application, the data are usually
+represented as an N-dimensional array in which each position in the
+array maps to a position in the dataset's world coordinate space.
+When visualizing this data, the scientist is usually more interested
+in a datum's position within the coordinate system than its absolute
+position within some data array.  So, by way of example, a useful
+visualizing tool displaying a satalite image of a patch of the earth
+might display the longitude and latitude of any voxel in the image
+whenever it is selected with a mouse.
+<P>
+Implicit to displaying coordinate positions is a conversion from the
+positions in the data array to positions in the coordinate system.
+The function mapping the two spaces might be described by a variety of
+parameters.  The parameters can be considered as <em>metadata</em> of
+the coordinate system.  Horizon's support of world coordinate systems
+relies heavily on its support for the notion of metadata; thus, this
+document takes some time to describe Horizon's metadata model
+(&#167;<A HREF="node3.html#Smetadata">2</A>) and shows how it is well suited for handling
+coordinate systems.
+<P>
+Horizon's object model for coordinate systems tries to be flexible
+enough to handle a wide variety of scientific applications.  Features
+of the model include:
+<P>
+<UL>
+<LI>support for multiple <em>schemas</em>, or ways of describing a
+coordinate system.  In general, the model makes no assumptions about
+how a system should be parameterized or, in particular, what names
+should be given to those parameters.
+<LI>support for mulitple coordinate systems.  Image voxels may
+logically map to positions in a variety of different coordinate
+systems.  For example, positions in a satalite image might be given
+either by longitude and latitude, by a relative grid position in units
+of miles, or by the name of the country the position resides within.
+The user can easily switch between the various systems when necessary.
+<LI>two-way conversion between dataset positions and world
+coordinate positions.  The mapping can be non-linear.  The conversion
+might be non-reversible due to some loss of information; for instance,
+converting a data position to a state name then back to a data
+position might not result in the original position.
+<LI>continuous data spaces.  Positions within datasets may be
+fractional, allowing one to ask the coordinate position of a location
+between two adjacent data voxels.
+<LI>automatic display of coordinate systems in an
+application-specific format.
+<P>
+</UL>
+<P>
+As our definition of an image suggests, the Horizon world coordinate
+system model does not explicitly support irregularly sampled data.
+In most cases, one should be able to ``squeeze'' such data into
+Horizon's image model and make use of Horizon tools to visualize the
+data; however, given that such data lies at least in part outside of
+Horizon's image model, the user may eventually encounter a limit to
+the usefulness of using Horizon to visualize this type of data.
+<P>
+When it comes to ``ease of use'', the Horizon design tries to favor
+the application programmer.  That is, when working with a fully
+supported data format, one can in a few lines instantiate
+full-featured objects with access to all the data necessary for
+visualization and analysis; the programmer does not need to concern
+him- or herself so much with how the data is read or where it is
+coming from.  The programmer wishing write a reader to support a new
+data format needs to understand a little more about the Horizon model;
+however, a number of tools are provided to make this easier.  This
+document covers both levels of detail.
+<P>
+<HR><A NAME="tex2html119" HREF="node3.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html117" HREF="CoordsAndMetadata.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html111" HREF="node1.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html121" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html120" HREF="node3.html">The Horizon Metadata Model</A>
+<B>Up:</B> <A NAME="tex2html118" HREF="CoordsAndMetadata.html">Supporting Metadata and Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html112" HREF="node1.html">Contents</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The World Coordinate System Classes</TITLE>
+<META NAME="description" CONTENT="The World Coordinate System Classes">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html263" HREF="node15.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html261" HREF="CoordsAndMetadata.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html255" HREF="node13.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html265" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html264" HREF="node15.html">Coordinate System Metadata</A>
+<B>Up:</B> <A NAME="tex2html262" HREF="CoordsAndMetadata.html">Supporting Metadata and Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html256" HREF="node13.html">On-Demand Data Loading: The </A>
+<BR> <P>
+<H1><A NAME="SECTION00040000000000000000">The World Coordinate System Classes</A></H1>
+<P>
+<A NAME="SWCS">&#160;</A>
+<P>
+The <TT>ncsa.horizon.coordinates</TT> package provides the basic support
+for world coordinate systems.  Central to this package is the
+<TT>CoordinateSystem</TT> class whose basic purpose is to transform positions
+in a dataset into positions in world coordinate space and back again.
+An application usually obtains the <TT>CoordinateSystem</TT> associated with a
+particular dataset via the <TT>Viewable</TT> method <TT>getCoordSys</TT>.
+The application can then pass voxels to the <TT>CoordinateSystem</TT> and get
+out positions in world coordinate space, as illustrated in this
+example: 
+<PRE>Viewable dataset;
+...
+CoordinateSystem coordSys = dataset.getCoordSys();
+
+// position in dataset, one element for each axis in the dataset
+double datapos[] = { 0, 0, 0 };                  
+
+// get back position in coordinate system 
+CoordPos cpos = coordSys.getCoordPos(datapos);   
+
+// print out positions for the first two axes
+System.out.println( cpos.getAxisLabel(0) + &quot;: &quot; + cpos.getValueString(0) );
+System.out.println( cpos.getAxisLabel(1) + &quot;: &quot; + cpos.getValueString(1) );</PRE>
+This might produce something like the following:
+<PRE>RA: 12:45:39.11
+Dec: -30:17:20.2</PRE>
+The <TT>CoordPos</TT> stores its coordinate system position internally
+as an array of doubbles; however, as one can see, the <TT>CoordPos</TT>
+in this example knows the proper way to turn the position into strings
+for display.
+<P>
+The Horizon <TT>SelectionViewer</TT> class allows one to request
+selected voxels which are returned as <TT>Voxel</TT> objects.  These
+<TT>Voxel</TT>s can in turn be passed to the <TT>getCoordPos</TT> method:
+<PRE>SelectionViewer  viewer;
+...
+Voxel vox = viewer.getSelectedVoxel();
+CoordPos cpos = coordSys.getCoordPos(vox);</PRE>
+The <TT>getVoxelVal(CoordPos)</TT> and <TT>getVoxel(CoordPos)</TT> do the
+opposite transform of <BR>[4] <TT>getCoordPos()</TT>, translating
+a coordinate position into a voxel location in the dataset and
+returning a <TT>double[]</TT> array and a <TT>Voxel</TT>, respectively.
+<P>
+Converting data positions to coordinate system positions, as in the
+above example (and perhaps back again) is the extent to which many
+applications will need to interact with the <TT>CoordinateSystem</TT>.  The
+<TT>Viewable</TT> interface hides the details reading and interpretation
+of the data and its metadata from the user, returning
+<TT>CoordinateSystem</TT> with all the information it needs to determine and
+display coordinate positions.  A good example (&#167;<A HREF="node32.html#Sptv">4.1</A>)
+of the use of coordinate systems at this level is the
+<TT>PosTrackerViewer</TT>, a <TT>Viewer</TT> displays the coordinate
+positions in an image pointed to by the mouse cursor, tracking the
+positions as the mouse is moved around the image display.  If one
+plans to implement a <TT>Viewable</TT> interface or otherwise construct
+<TT>CoordinateSystem</TT> objects, one needs to know a little more about
+coordinate system metadata and how they are used to instantiate
+<TT>CoordinateSystem</TT> objects.
+<P>
+<BR> <HR>
+<UL><A NAME="CHILD_LINKS">&#160;</A>
+<LI> <A NAME="tex2html266" HREF="node15.html#SECTION00041000000000000000">Coordinate System Metadata</A>
+<UL>
+<LI> <A NAME="tex2html267" HREF="node16.html#SECTION00041100000000000000">Using Metadata to Construct CoordinateSystems</A>
+<LI> <A NAME="tex2html268" HREF="node17.html#SECTION00041200000000000000">The Horizon Schema for Coordinate Systems</A>
+</UL> 
+<LI> <A NAME="tex2html269" HREF="node18.html#SECTION00042000000000000000">Example Coordinate Systems</A>
+<UL>
+<LI> <A NAME="tex2html270" HREF="node19.html#SECTION00042100000000000000"><TT>CoordinateSystem</TT>: the Simplest System</A>
+<LI> <A NAME="tex2html271" HREF="node20.html#SECTION00042200000000000000"><TT>LinearCoordinateSystem</TT>: a System With Linear Axes</A>
+<LI> <A NAME="tex2html272" HREF="node21.html#SECTION00042300000000000000"><TT>LinSphCoordinateSystem</TT>: Combining Spherical and
+Linear Coordinates</A>
+</UL> 
+<LI> <A NAME="tex2html273" HREF="node22.html#SECTION00043000000000000000">Converting Between Multiple Coordinate Systems</A>
+<UL>
+<LI> <A NAME="tex2html274" HREF="node23.html#SECTION00043100000000000000">Basic Use</A>
+<LI> <A NAME="tex2html275" HREF="node24.html#SECTION00043200000000000000">Use Outside of a <TT>CoordinateSystem</TT></A>
+<LI> <A NAME="tex2html276" HREF="node25.html#SECTION00043300000000000000">Implementing New <TT>CoordTransform</TT> Classes</A>
+<UL>
+<LI> <A NAME="tex2html277" HREF="node26.html#SECTION00043310000000000000"><TT>getInAxes(), getOutAxes()</TT></A>
+<LI> <A NAME="tex2html278" HREF="node27.html#SECTION00043320000000000000"><TT>determineConstraints(Metadata in, boolean forwards)</TT></A>
+<LI> <A NAME="tex2html279" HREF="node28.html#SECTION00043330000000000000"><TT>init(CoordinateSystem csys, boolean forward, int[]
+                 axisIndexList)</TT></A>
+<LI> <A NAME="tex2html280" HREF="node29.html#SECTION00043340000000000000"><TT>getMetadata(Metadata in, boolean forward, int[] axisIndices)</TT></A>
+</UL> 
+</UL> 
+<LI> <A NAME="tex2html281" HREF="node30.html#SECTION00044000000000000000">Implementing a New Coordinate System</A>
+</UL>
+<HR><A NAME="tex2html263" HREF="node15.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html261" HREF="CoordsAndMetadata.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html255" HREF="node13.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html265" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html264" HREF="node15.html">Coordinate System Metadata</A>
+<B>Up:</B> <A NAME="tex2html262" HREF="CoordsAndMetadata.html">Supporting Metadata and Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html256" HREF="node13.html">On-Demand Data Loading: The </A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

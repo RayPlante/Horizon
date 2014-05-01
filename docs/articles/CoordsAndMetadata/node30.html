@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Implementing a New Coordinate System</TITLE>
+<META NAME="description" CONTENT="Implementing a New Coordinate System">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html461" HREF="node31.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html459" HREF="node14.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html455" HREF="node29.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html463" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html462" HREF="node31.html">Putting It All Together:  </A>
+<B>Up:</B> <A NAME="tex2html460" HREF="node14.html">The World Coordinate System </A>
+<B> Previous:</B> <A NAME="tex2html456" HREF="node29.html">getMetadata(Metadata inboolean forward, </A>
+<BR> <P>
+<H2><A NAME="SECTION00044000000000000000">Implementing a New Coordinate System</A></H2>
+<P>
+One can think of a <TT>CoordinateSystem</TT> that encapsulates one or more
+transformations together to convert dataset positions into world
+coordinate positions.  Thus the simplest way-actually, the most
+appropriate way-to create a new <TT>CoordinateSystem</TT> class is to
+subclass another <TT>CoordinateSystem</TT> and within the constructor, attach
+any new <TT>CoordTransform</TT> objects necessary to map positions into the
+new system.
+<P>
+For example, the <TT>CoordinateSystem</TT> class itself starts off containing
+no internal transforms.  Coordinate positions return from its
+<TT>getCoordPos()</TT> method simply return the input dataset position
+unchanged.  The <TT>LinearCoordinateSystem</TT> subclasses
+<TT>CoordinateSystem</TT> and adds one transform to the empty stack of
+transforms the class will use: the <TT>LinearCoordTransform</TT>.  Here
+is the snippet of code executed by the <TT>LinearCoordinateSystem</TT>
+constructors to accomplish this:
+<PRE>try {
+    t = new LinearCoordTransform(cmdata);
+} catch (IllegalTransformException ex) {
+    throw new 
+        IllegalTransformException(&quot;Bad parameters in metadata: &quot; +
+                                  ex.getMessage());
+}
+CoordTransformConstraints c = new CoordTransformConstraints(naxes);
+attachTransform(t, c);
+glueTransforms(false);</PRE>
+The last line calls the protected method <TT>glueTransforms()</TT>.
+This method ``glues'' all currently attached transforms to the system,
+preventing them from being removed with methods like
+<TT>popTransform()</TT>.
+<P>
+For most subclasses of <TT>CoordinateSystem</TT>, it is not necessary to
+override any other methods other than constructors.  Whenever either
+<TT>getCoordPos()</TT> or <TT>getVoxel()</TT> is called, the
+<TT>CoordinateSystem</TT> will automatically send the input position through
+its stack of transforms, first the ``glued'' transforms and then the
+``attached'' ones.  Of course, when you set out to implement a new
+<TT>CoordinateSystem</TT>, you may discover that the <TT>CoordTransform</TT> you need
+does not exist.  In this case, you will have to first implement the
+specialized <TT>CoordTransform</TT> <BR>[2] classes you will need.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

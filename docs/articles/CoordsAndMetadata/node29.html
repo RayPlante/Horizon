@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>getMetadata(Metadata in, boolean forward, int[] axisIndices)</TITLE>
+<META NAME="description" CONTENT="getMetadata(Metadata in, boolean forward, int[] axisIndices)">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html452" HREF="node30.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html450" HREF="node25.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html446" HREF="node28.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html454" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html453" HREF="node30.html">Implementing a New Coordinate </A>
+<B>Up:</B> <A NAME="tex2html451" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<B> Previous:</B> <A NAME="tex2html447" HREF="node28.html">init(CoordinateSystem csysboolean forward, </A>
+<BR> <P>
+<H4><A NAME="SECTION00043340000000000000"><TT>getMetadata(Metadata in, boolean forward, int[] axisIndices)</TT></A></H4>
+<P>
+After a <BR>[4] <TT>CoordinateSystem</TT> calls a transform's
+<TT>init()</TT> method, it updates its own <TT>Metadata</TT> list by passing
+through to the transform's <TT>getMetadata()</TT> method.  This method
+does to the metadata what <TT>forward()</TT> and <TT>reverse()</TT> do to
+positions: it transforms the metadata to the new system.  Often this
+means updating the values of the ``Axis[<em>n</em>].name'' metadata;
+however, other metadata may need to be updated or added as well.
+<P>
+For example, the <TT>CelToGalCoordTransform</TT>'s <TT>getMetadata()</TT>
+will, when assuming the forward direction, will update the appropriate
+axis name to ``Galactic Longitude''.  It also will update the
+appropriate axis formatter object (i.e. ``Axis[<em>n</em>].formatter'')
+so that transformed positions will be printed out with a more
+appropriate format.  On the other hand, the
+<TT>AbsToRelCoordTransform</TT> does not care what kind of axes it
+operates on, and so it may (depending on how it was constructed) pass
+the Metadata through unchanged.
+<P>
+The behavior of the <TT>getMetadata()</TT> can be adjusted somewhat
+without having to override the <TT>getMetadata()</TT>.  For instance,
+the <TT>setName()</TT> method allows one to tell the transform what name
+to give a particular axis when the transform is applied to a system.
+Similarly, the <TT>setFormatter()</TT> method sets the
+<TT>AxisPosFormatter</TT> object to use when formatting the tranformed
+position.  By default, <TT>getMetadata()</TT> will pass the
+<TT>Metadata</TT> through the transform's <TT>applyNamesAndFormatters()</TT>
+method to apply any names and formatters that were set prior to
+attachment.  Thus, if you do override the <TT>getMetadata()</TT> method,
+be sure to call either <TT>super.getMetadata()</TT> or
+<TT>applyNamesAndFormatters()</TT> within it (usually as the last step
+of method).
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

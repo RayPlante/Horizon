@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Handle Updateable Metadata Values With Care.</TITLE>
+<META NAME="description" CONTENT="Handle Updateable Metadata Values With Care.">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html221" HREF="node11.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html219" HREF="node7.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html215" HREF="node9.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html223" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html222" HREF="node11.html">Protecting Metadata Via Defaults</A>
+<B>Up:</B> <A NAME="tex2html220" HREF="node7.html">Possible Pitfalls and Safety </A>
+<B> Previous:</B> <A NAME="tex2html216" HREF="node9.html">Use Consistant Value Types </A>
+<BR> <P>
+<H4><A NAME="SECTION00032230000000000000">Handle Updateable Metadata Values With Care.</A></H4>
+<P>
+The final cautionary note relates to one's choice of types for new
+metadata.  Obviously, one can successfully use any subclass of
+<TT>Object</TT>, including arrays (e.g. <TT>double[]</TT>, <TT>int[]</TT>, etc.),
+as long as the metadata ``readers'' and ``writers'' are consistant in
+the use of the types.  However, one should use caution when the value
+object is of a class type containing internal data that can be
+updated.  Examples of this include <TT>java.util.Vector</TT>,
+<TT>java.util.BitSet</TT>, <TT>java.awt.Rectangle</TT>, and any Java
+array.  Classes like these contain either public member fields or
+methods with names like <TT>set<I>Paramter</I>()</TT> that update
+protected internal data.  The reason caution is necessary with these
+classes is that a client object can obtain a reference to the value
+(via <TT>getMetadatum</TT>) and then update its internal data; this will
+affect not only other objects that already have a reference to the
+metadatum value, but it will also affect those that obtain a reference
+via <TT>getMetadatum</TT> in the future.  In a sense, the contents of
+the Metadata list will have been updated without calling the
+<TT>put</TT> method.
+<P>
+Classes like <TT>Double</TT> and <TT>Integer</TT> can not be updated and
+therefore are safe from this effect.  The only way a client can update
+the effective contents of a <TT>Metadata</TT> list containing only
+non-updatable objects is via an explicit call of a <TT>Metadata</TT> method
+(or method of one of its super- or sub-classes).
+<P>
+The ``horizon'' schema avoids the use updatable class types for
+metadatum values, with three exceptions: <TT>Metadata</TT>, <TT>Metavector</TT>, and
+<TT>Metarunner</TT>.  The latter two classes are described in the next two 
+sections.  The <TT>Metadata</TT> class knows about these other classes, and
+can take special precautions to protect this data from updates when
+necessary.  &#167;<A HREF="node11.html#Sdefaults">2.3</A> describes this capability in more
+detail.  Where the ``horizon'' schema does define metadata to have
+types that are updateable (like ``defaultSlice'' and ``dataVolume''),
+Horizon classes will wrap them with the <TT>Metarunner</TT> object,
+<TT>ObjectCloner</TT> (see &#167;<A HREF="node13.html#SMetarunner">2.5</A> for more details).
+<P>
+<HR><A NAME="tex2html221" HREF="node11.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html219" HREF="node7.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html215" HREF="node9.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html223" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html222" HREF="node11.html">Protecting Metadata Via Defaults</A>
+<B>Up:</B> <A NAME="tex2html220" HREF="node7.html">Possible Pitfalls and Safety </A>
+<B> Previous:</B> <A NAME="tex2html216" HREF="node9.html">Use Consistant Value Types </A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

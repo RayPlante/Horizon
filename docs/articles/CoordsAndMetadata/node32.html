@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Viewer: Getting and Displaying Positions</TITLE>
+<META NAME="description" CONTENT="The Viewer: Getting and Displaying Positions">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html488" HREF="node33.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html486" HREF="node31.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html480" HREF="node31.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html490" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html489" HREF="node33.html">The ImageDisplayMap Class</A>
+<B>Up:</B> <A NAME="tex2html487" HREF="node31.html">Putting It All Together:  </A>
+<B> Previous:</B> <A NAME="tex2html481" HREF="node31.html">Putting It All Together:  </A>
+<BR> <P>
+<H2><A NAME="SECTION00051000000000000000">The Viewer: Getting and Displaying Positions</A></H2>
+<P>
+<A NAME="Sptv">&#160;</A>
+<P>
+Our example uses the <TT>ncsa.horizon.viewer.PosTrackerViewer</TT> to
+display images.  Its specialty as a <TT>Viewer</TT> is that it displays
+the data pixel positions and their corresponding world coordinate
+positions for the pixels pointed to by the mouse.  As the mouse moves
+within the image, positions update in real time.
+<P>
+Our viewer is a typical example of the simplest interactions with a
+coordinate system, namely converting data voxels into coordinate
+positions.  This is the level at which most applications programmers
+will operate on (when they indeed need to directly interact with
+coordinates at all).  Our viewer accesses the coordinate system via a
+reference to a CoordinateSystem object, regardless of what actual
+subclass of that object is, using only CoordinateSystem methods.
+<P>
+The first part of the <TT>PosTrackerViewer</TT>, we will look at is the part
+where a new slice from the dataset is displayed-that is, within the
+<TT>displaySlice(Slice sl)</TT> method:
+<PRE>    if (newViewable) {
+
+        // this is a new data set, so we need to update our coordinate
+        // system 
+        coordSys = data.getCoordSys();</PRE>
+The boolean <TT>newViewable</TT> is set when <TT>addViewable(Viewable)</TT>
+is called, i.e. when a new dataset is attached to the viewer.  Thus,
+before we display this data for the first time, we need to get the
+data's <TT>CoordinateSystem</TT> by calling the <TT>Viewable</TT> method
+<TT>getCoordSys()</TT>.
+<P>
+The next thing we do is update the labels we use to identify the
+current slice:
+<PRE>    // Since the user may have chosen a different pair of axes to
+    // display, we should update our axis labels.
+    if (coordSys != null) {
+        xLabel.setText( coordSys.getAxisLabel(slice.getXaxis()) + 
+                        &quot;: &quot; );
+        yLabel.setText( coordSys.getAxisLabel(slice.getYaxis()) + 
+                        &quot;: &quot; );
+    }</PRE>
+Now we are ready to display the image.  In order to see how we display
+world coordinate positions, we should first take a look at one the
+<TT>ImageDisplayMap</TT>.
+<P>
+<BR> <HR>
+<UL><A NAME="CHILD_LINKS">&#160;</A>
+<LI> <A NAME="tex2html491" HREF="node33.html#SECTION00051100000000000000">The <TT>ImageDisplayMap</TT> Class</A>
+<LI> <A NAME="tex2html492" HREF="node34.html#SECTION00051200000000000000">Configuring the <TT>ImageDisplayMap</TT> Object</A>
+<LI> <A NAME="tex2html493" HREF="node35.html#SECTION00051300000000000000">Updating the coordinate display</A>
+</UL>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

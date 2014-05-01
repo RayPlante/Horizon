@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Using Metadata to Construct CoordinateSystems</TITLE>
+<META NAME="description" CONTENT="Using Metadata to Construct CoordinateSystems">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html303" HREF="node17.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html301" HREF="node15.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html295" HREF="node15.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html305" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html304" HREF="node17.html">The Horizon Schema for </A>
+<B>Up:</B> <A NAME="tex2html302" HREF="node15.html">Coordinate System Metadata</A>
+<B> Previous:</B> <A NAME="tex2html296" HREF="node15.html">Coordinate System Metadata</A>
+<BR> <P>
+<H3><A NAME="SECTION00041100000000000000">Using Metadata to Construct CoordinateSystems</A></H3>
+<P>
+<A NAME="SbasicCS">&#160;</A>
+<P>
+The Horizon package considers the parameters needed to describe a
+coordinate system, such as the number of axes, the width of a voxel
+along each axis, etc., to be metadata of the system.  Different kinds 
+of coordinate systems will need different sets of metadata to define
+the system.  In some cases, a large number of parameters will be
+needed to define the system.  Thus, the <TT>Metadata</TT> class provides a
+clean way to gather up all the necessary parameters and pass them to
+the constructor of a <TT>CoordinateSystem</TT>.
+<P>
+To illustrate this procedure, we can look at a trivial example using
+the basic <BR>[4] <TT>CoordinateSystem</TT> class which by itself does
+not apply any conversion between data positions and coordinate
+positions-that is, when one calls the <TT>getCoordPos</TT> method for a
+particular data position, that position is returned unchanged (though
+in a different form).  A plain <TT>CoordinateSystem</TT> is used when no
+special coordinate system is defined for the dataset, such as GIF or
+JPEG images.  When this kind of data is displayed with a viewer that
+tracks coordinate positions (like the <TT>PosTrackerViewer</TT>, see
+&#167;<A HREF="node32.html#Sptv">4.1</A>), only the dataset positions are displayed.  The
+only metadatum needed to describe this system is the number of axes.
+Thus, we can construct the <TT>CoordinateSystem</TT> object in the following
+way:
+<PRE>    Metadata cmdata = new Metadata();
+    cmdata.put(&quot;naxes&quot;, new Integer(2));
+    CoordinateSystem csys = new CoordinateSystem(cmdata);</PRE>
+<P>
+Although this example is illustrative, it is a bit more lengthy than
+it needs to be; plus, it is error-prone (what if we had saved
+``naxes'' as a <TT>Double</TT>?).  As an aid for collecting metadata
+specifically associated with coordinate systems, the Horizon package
+provides the <TT>CoordMetadata</TT> class.  With this class, one can
+accomplish the same as above with:
+<PRE>    CoordinateSystem csys = new CoordinateSystem(new CoordMetadata(2));</PRE>
+This is the preferred way to construct a simple <TT>CoordinateSystem</TT>; not
+only is it more concise and safer, it actually sets some other default
+metadata as described in the next section.
+<P>
+<HR><A NAME="tex2html303" HREF="node17.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html301" HREF="node15.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html295" HREF="node15.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html305" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html304" HREF="node17.html">The Horizon Schema for </A>
+<B>Up:</B> <A NAME="tex2html302" HREF="node15.html">Coordinate System Metadata</A>
+<B> Previous:</B> <A NAME="tex2html296" HREF="node15.html">Coordinate System Metadata</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

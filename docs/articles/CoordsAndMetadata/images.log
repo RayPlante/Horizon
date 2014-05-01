@@ -1,0 +1,78 @@
+This is TeX, Version 3.14159 (Web2c 7.0) (format=latex 97.3.10)  25 AUG 1997 15:16
+**./images.tex
+(./images.tex
+LaTeX2e <1996/12/01>
+
+(/usr/local/tex/share/texmf/tex/latex/base/article.cls
+Document Class: article 1996/10/31 v1.3u Standard LaTeX document class
+(/usr/local/tex/share/texmf/tex/latex/base/size12.clo
+File: size12.clo 1996/10/31 v1.3u Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/local/tex/share/texmf/tex/latex/base/html.sty
+Package: html 1996/02/01 v1.0 hypertext commands for latex2html (nd, hws)
+\c@lpart=\count87
+\c@lchapter=\count88
+\c@lsection=\count89
+\c@lsubsection=\count90
+\c@lsubsubsection=\count91
+\c@lparagraph=\count92
+\c@lsubparagraph=\count93
+\c@lsubsubparagraph=\count94
+\c@lequation=\count95
+\ptrfile=\write3
+) (/usr/local/tex/share/texmf/tex/latex/graphics/epsfig.sty
+Package: epsfig 1996/10/04 v1.7 (e)psfig emulation (SPQR)
+(/usr/local/tex/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1996/10/31 v1.0c Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/tex/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1995/09/21 v1.09 key=value parser (DPC)
+) (/usr/local/tex/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 1996/10/31 v1.0c Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/tex/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1994/10/16 v1.08 sin cos tan (DPC)
+) (/usr/local/tex/share/texmf/tex/latex/graphics/graphics.cfg)
+Package graphics Info: Driver file: dvips.def on input line 82.
+(/usr/local/tex/share/texmf/tex/latex/graphics/dvips.def
+File: dvips.def 1996/12/12 v3.0d Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+\epsfxsize=\dimen105
+\epsfysize=\dimen106
+)
+
+! LaTeX Error: File `supertabular.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.5 \usepackage
+               {smartspace}^^M
+*** (cannot \read from terminal in nonstop modes)
+
+ 
+Here is how much of TeX's memory you used:
+ 628 strings out of 10980
+ 7076 string characters out of 73574
+ 51234 words of memory out of 263001
+ 3529 multiletter control sequences out of 10000+0
+ 3938 words of font info for 15 fonts, out of 100000 for 500
+ 14 hyphenation exceptions out of 1000
+ 32i,0n,21p,223b,40s stack positions out of 300i,100n,500p,3000b,4000s
+No pages of output.

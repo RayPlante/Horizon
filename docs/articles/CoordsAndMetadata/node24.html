@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Use Outside of a CoordinateSystem</TITLE>
+<META NAME="description" CONTENT="Use Outside of a CoordinateSystem">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html397" HREF="node25.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html395" HREF="node22.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html389" HREF="node23.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html399" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html398" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<B>Up:</B> <A NAME="tex2html396" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html390" HREF="node23.html">Basic Use</A>
+<BR> <P>
+<H3><A NAME="SECTION00043200000000000000">Use Outside of a <TT>CoordinateSystem</TT></A></H3>
+<P>
+It is perfectly legal to use a <TT>CoordTransform</TT> object directly to
+tranform positions without having to attach it to a
+<TT>CoordinateSystem</TT>.  In this case, one would use one of the following
+<TT>CoordTransform</TT> methods:  
+<UL><TT>
+<LI> forward(double[] position)
+<LI> forward(double[] position, int[] axisIndexList)
+<LI> reverse(double[] position)
+<LI> reverse(double[] position, int[] axisIndexList)
+</UL></TT>
+Obviously, the <TT>forward()</TT> methods perform the forward
+transform.  Normally, one would need to use the two-argument version
+to indicate how the transform is to be applied.  In this case, the Axis
+Index List (described in &#167;<A HREF="node23.html#Sctbasics">3.3.1</A>) is given as a simple
+integer array, where the first element indicates which element in the
+position array is for the first axis as defined by the transform.  As
+illustrated in the previous section, one would need to provide an Axis
+Index List for the <TT>CelToGalCoordTransform</TT> to indicate which
+axes are the right ascension and declination.  By contrast, the
+<TT>AbsToRelCoordTransform</TT> will by default try to transform as many
+axes as it can in the order that they appear; in this case, one can
+use the one-argument versions of <TT>forward()</TT> and
+<TT>reverse()</TT>.
+<P>
+When you use the transforming methods directly, you may need to be
+prepared to catch two possible <TT>CoordTransformException</TT>s:
+<TT>PositionBeyondDomainException</TT> and <BR>[4]
+<TT>TransformUndefinedException</TT>.  One of these exceptions may be
+thrown if there is no logical or mathematical tranform for the input
+position.  For example, the <TT>LinToSphLinCoordTransform</TT> class is
+used to project a flat surface onto a sphere using one of a variety of
+projection scheme (e.g. mercatur, sinusoidal, etc.).  With certain
+projections, not all positions in the ``map'' plane correspond to
+positions on a globe; these positions would throw a <BR>[4]
+<TT>PositionBeyondDomainException</TT>.
+<P>
+There are a few thing that you should note when using the
+transforming methods directly.  First, in the interest of speed and
+efficiency, the transforming method has the option of overwriting the
+values within the input array.  They also have the option of creating
+and returning a new array to hold the tranformed position.  Therefore,
+after calling either <TT>forward()</TT> or <TT>reverse()</TT>, always
+assume that the input position has been corrupted and that the output
+position has the value you want.  A good way to implement this tip
+would be with the following code:
+<PRE>double pos = { 1.0, 234.25, 18.5 };
+pos = conversion.forward(pos);</PRE>
+<P>
+The second thing to keep in mind is that the number of input axes need
+not equal the number of output axes (here would be a case where the
+transform would have to create a new array to hold the output
+position).  Unless you know at programming time what the effect of the
+transform is, you should check the length of the output array before
+accessing the output position values.
+<P>
+<HR><A NAME="tex2html397" HREF="node25.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html395" HREF="node22.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html389" HREF="node23.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html399" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html398" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<B>Up:</B> <A NAME="tex2html396" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html390" HREF="node23.html">Basic Use</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Viewable: Loading the Proper Metadata</TITLE>
+<META NAME="description" CONTENT="The Viewable: Loading the Proper Metadata">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html531" HREF="node37.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html529" HREF="node31.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html525" HREF="node35.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html533" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html532" HREF="node37.html">Metadata Lexicons</A>
+<B>Up:</B> <A NAME="tex2html530" HREF="node31.html">Putting It All Together:  </A>
+<B> Previous:</B> <A NAME="tex2html526" HREF="node35.html">Updating the coordinate display</A>
+<BR> <P>
+<H2><A NAME="SECTION00052000000000000000">The Viewable: Loading the Proper Metadata</A></H2>
+<P>
+<A NAME="SCDAViewable">&#160;</A>
+<P>
+You might wonder how the coordinate system was created in first place
+for it to be used by our viewer.  Creating a <TT>CoordinateSystem</TT> object
+is usually the job of a <TT>Viewable</TT> implementation whose job is to
+be a format-independent interface between the application and a
+format-specific reader.  It needs to read the relevent data from the
+formatted data source, load them into a <TT>Metadata</TT> list, and then
+turn them into the proper <TT>CoordinateSystem</TT>.  Because of the
+relationship between a <TT>Viewable</TT> implementation and the specific
+data format it sits on top of, one normally would only need to mess
+with the details of creating new <TT>CoordinateSystem</TT> objects when
+integrating a new data format with the Horizon package.
+<P>
+Our demonstration applet, <TT>CoordDemoApplet</TT> illustrates how to
+create <TT>CoordinateSystem</TT> <BR>[0] objects.  As mentioned in
+&#167;<A HREF="node19.html#SexampleCSsimple">3.2.1</A>, GIF and JPEG images are usually given the
+simplest <BR>[3] <TT>CoordinateSystem</TT>s which are simply pixel
+based; this is because these data formats do not include anymore
+complex information about the coordinate system the pixels reside in.
+In principle, however the coordinate system information could exist
+somewhere other than in the file containing such an image.  In our
+example, we show how we might use externally obtained coordinate
+metadata to apply complex coordinate systems to a selection of
+predefined GIF and JPEG images.  This is done by wrapping the images
+in a special implementation of the <TT>Viewable</TT> interface (whose
+definition is given within the <TT>CoordDemoApplet.java</TT> file).
+<P>
+In this section, we will look at one of those images, an image of the
+center of the Milky Way taken at radio frequencies.  The
+implementation of the <TT>Viewable</TT>'s <TT>getCoordSys</TT> first
+checks to see there is coordinate metadata available for the image.
+If not, it returns a simple <TT>CoordinateSystem</TT> object just like we saw
+in &#167;<A HREF="node19.html#SexampleCSsimple">3.2.1</A>.  If the image is one it recognizes, it
+declares its coordinate metadata:
+<PRE>    // GalacticCenter.gif
+    if (id.equals(&quot;GalacticCenter.gif&quot;)) {
+
+        // here's the basic data that applies to this image; this 
+        // information would usually be obtained from the input
+        // data itself using a reader that understands the data's 
+        // format
+        //
+        // Number of axes
+        int naxes = 2;
+
+        // Reference position in degrees
+        double[] refval = { 265.604165196, -28.9583335072 };
+
+        // Reference voxel: the voxel whose position is the reference 
+        // position
+        double[] refpos = { 265.0, 182.0 };
+
+        // Voxel size in absolute degrees
+        double[] voxelsize = { -2.777777845E-04, -2.777777845E-04 };
+
+        // Names for the axes:
+        String[] axisnames = { &quot;R.A.&quot;, &quot;Dec.&quot; };
+
+        // Projection code: type of projection used
+        String projcode = &quot;SIN&quot;;</PRE>
+For typical scientific formats, this data would come from the
+format-specific reader which would have extracted the data from the
+file itself.
+<P>
+Next we load the data into a <TT>Metadata</TT> list:
+<PRE>        // Before we create the CoordinateSystem object, we need to 
+        // load the parameters into a Metadata object.  This is best
+        // done using a CoordMetadata object.
+        CoordMetadata cmdata = new CoordMetadata(2);
+
+        // The CoordMetadata class is aware of the metadata that 
+        // CoordinateSystems look for and helps ensure that the data
+        // is loaded with the correct metadata name and type.  It 
+        // does this by providing special set methods for the 
+        // Coordinate related metadata.  See the API documentation for
+        // CoordMetadata for more information.
+        //
+        cmdata.setAxisRefposition(0, refpos[0]);
+        cmdata.setAxisRefposition(1, refpos[1]);
+        cmdata.setAxisRefvalue(0, refval[0]);
+        cmdata.setAxisRefvalue(1, refval[1]);
+        cmdata.setAxisStepsize(0, voxelsize[0]);
+        cmdata.setAxisStepsize(1, voxelsize[1]);
+
+        cmdata.setAxisType(0, &quot;longitude&quot;);
+        cmdata.setAxisType(1, &quot;latitude&quot;);
+
+        // If we know what the correct data Metadata key name and type
+        // for the data we are setting, we could alternatively use a 
+        // method of the super-class Metadata (see API documentation
+        // for CoordMetadata for details):
+        // 
+        cmdata.setAxisName(axisnames);
+
+        // We should choose formatter objects of type CoordAxisPos.
+        // This object converts a double into a formatted String.
+        // If we do not set this, a default formatter will be set
+        // that prints the position as normal double values.
+        // 
+        // For this dataset, we want the positions printed with a 
+        // special format.  RA should be printed in 
+        // hours:minutes:seconds format and Dec should be printed 
+        // in degrees:minutes:seconds format.
+        cmdata.setAxisFormatter(0, new HHMMSSAxisPosFormatter());
+        cmdata.setAxisFormatter(1, new DDMMSSAxisPosFormatter());
+
+        // Now we create the desired CoordinateSystem.  Our reader tells
+        // us (or assumes) that the coordinate system is a sphere 
+        // projected on a plane; thus we will use the 
+        // ProjectedSphericalCoordinateSystem.  
+        //
+        // This CoordinateSystem requires a metadatum called &quot;projection&quot;,
+        // the code that identifies the projection type. (See 
+        // ProjectedSphericalCoordinateSystem API documentation.)
+        //
+        cmdata.put(&quot;projection&quot;, projcode);</PRE>
+We used the <TT>CoordMetadata</TT> class to help us load the data in
+accordance with the horizon schema so that the data can be used by the
+coordinate classes.  Note, however, that this GIF image was originally
+created from a FITS file.  If we were reading the FITS file directly,
+we could use the <TT>FITSCoordMetadata</TT> class to load the data.
+This class takes the FITS metadata in its native form and
+automatically converts it to the horizon schema before saving them in
+the metadata list.
+<P>
+Finally, we can create the <TT>CoordinateSystem</TT>:
+<PRE>        // We tell the constructor that axis 0 is the longitude axis and 
+        // axis 1 is the latitude axis.
+        //
+        try {
+            coord = new SphLinCoordinateSystem(cmdata);
+        } catch (IllegalTransformException ex) {
+            System.err.println(&quot;Warning: &quot; + ex.getMessage() + &quot;\n&quot; +
+                               &quot;Using a default coordinate system.&quot;);
+            coord = new CoordinateSystem(new CoordMetadata(2));
+        }
+    }</PRE>
+We chose the <TT>ncsa.horizon.coordinates.systems.SphLinCoordinateSystem</TT> 
+implementation because our image has two spherical axes in it, right
+ascension and declination, which represent longitude and latitude on the
+sky.  The <TT>try</TT> block is used to catch an exception that might be
+thrown if the collection of metadata do not describe any definable
+coordinate system.  This might happen if some of the metadata have
+erroneous or inconsistent values or if needed metadata do not exist in
+the metadata list.  In this case, we resort to a simple pixel-based
+coordinate system.
+<P>
+As a summary, we can trace the procedure of coordinate tracking from
+the initial metadata to the display of coordinate systems by a viewer.
+First the coordinate-related metadata are read in from a
+format-specific file and loaded into a <TT>Metadata</TT> list using the
+horizon schema.  These metadata are then used to create a
+<TT>CoordinateSystem</TT> object which is handed to the <TT>Viewer</TT> via the
+<TT>Viewable</TT>'s <TT>getCoordSys</TT> method.  The <TT>Viewer</TT> keeps
+track of how the data is displayed in its display region using an
+<TT>ImageDisplayMap</TT> object.  When the user requests the coordinate
+position from a displayed pixel (say, by moving the mouse over the
+pixel), the display pixel is first converted to a data voxel by
+passing it through the <TT>ImageDisplayMap</TT>; that voxel is then sent
+through the <TT>CoordinateSystem</TT> to get the coordinate position.  When it
+is displayed for the user, it is automatically printed in a coordinate
+system-specific format.
+<P>
+<HR><A NAME="tex2html531" HREF="node37.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html529" HREF="node31.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html525" HREF="node35.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html533" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html532" HREF="node37.html">Metadata Lexicons</A>
+<B>Up:</B> <A NAME="tex2html530" HREF="node31.html">Putting It All Together:  </A>
+<B> Previous:</B> <A NAME="tex2html526" HREF="node35.html">Updating the coordinate display</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,23 @@
+			   CoorDemoApplet:
+	  A Demonstration of the Horizon Coordinate Classes
+
+This directory contains a demonstration of a simple viewer that tracks
+world coordinate positions of data voxels within a dataset.  It is
+provided as an example to programmers on the use of Horizon's
+coordinate classes.  For more information about these classes see
+CoordsAndMetadata.html in the Horizon/docs/articles/CoordsAndMetadata
+directory.
+
+To run this demo as a standalone application, one usually types
+something like,
+
+   java CoordDemoApplet
+
+You can also run this demo from our Web site at 
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples/index.html.
+
+The applet comes up initially ready to access one of a selected group
+of images from the local disk for which there is coordinate system
+parameters known.  One can alternatively browse other images from the
+Web or on local disk.  
+

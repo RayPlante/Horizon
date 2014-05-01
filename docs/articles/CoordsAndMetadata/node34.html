@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Configuring the ImageDisplayMap Object</TITLE>
+<META NAME="description" CONTENT="Configuring the ImageDisplayMap Object">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html513" HREF="node35.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html511" HREF="node32.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html505" HREF="node33.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html515" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html514" HREF="node35.html">Updating the coordinate display</A>
+<B>Up:</B> <A NAME="tex2html512" HREF="node32.html">The Viewer: Getting and </A>
+<B> Previous:</B> <A NAME="tex2html506" HREF="node33.html">The ImageDisplayMap Class</A>
+<BR> <P>
+<H3><A NAME="SECTION00051200000000000000">Configuring the <TT>ImageDisplayMap</TT> Object</A></H3>
+<P>
+Turning back to our example, the <TT>PosTrackerViewer</TT> maintains an
+<TT>ImageDisplayMap</TT> object which must updated everytime a new
+<TT>Slice</TT> is displayed.  Here is that first section of code from the
+<TT>displaySlice(Slice sl)</TT> that we showed above but with a few more
+lines:
+<PRE>    if (newViewable) {
+
+        // this is a new data set, so we need to update our coordinate
+        // system 
+        coordSys = data.getCoordSys();
+
+        // we also need to reset our ImageDisplayMap object that defines
+        // the mapping between display and data pixels.
+        setPixelMap(slice, null);
+        newViewable = false;
+    } 
+    else {
+
+        // this is just a new slice from an already attached Viewable;
+        // thus, we need only update the pixel mapper.
+        updatePixelMap();
+    }</PRE>
+The <TT>setPixelMap()</TT> and <TT>updatePixelMap()</TT> methods keep the
+<TT>ImageDisplayMap</TT> object in sync with what is being viewed, so let's
+have a look at them.  Here's the code for the method that sets up the 
+<TT>ImageDisplayMap</TT> when a new <TT>Viewable</TT> is attached to the
+<TT>Viewer</TT>: 
+<PRE>protected synchronized void setPixelMap(Slice dataSlice, 
+                                        Rectangle displayRegion) {
+
+    Boolean xaxisReversed, yaxisReversed;
+    if (data != null) {
+
+        pixelMap = new ImageDisplayMap();
+
+        // the attached viewable may give some hints on how the 
+        // data is ordered in the form of &quot;xaxisReversed&quot; and
+        // &quot;yaxisReversed&quot; metadata
+        // 
+        Metadata md = data.getMetadata();
+        if (md != null) {
+            try {
+                xaxisReversed = (Boolean) md.getMetadatum(&quot;xaxisReversed&quot;);
+            } catch (ClassCastException ex) { xaxisReversed = null; }
+            try {
+                yaxisReversed = (Boolean) md.getMetadatum(&quot;yaxisReversed&quot;);
+            } catch (ClassCastException ex) { yaxisReversed = null; }
+        }
+
+        if (xaxisReversed != null) 
+            pixelMap.xaxisReversed = xaxisReversed.booleanValue();
+        if (yaxisReversed != null) 
+            pixelMap.yaxisReversed = yaxisReversed.booleanValue();
+    }
+
+    // now set the mapping appropriate for a slice of requested size
+    updatePixelMap(dataSlice, displayRegion);
+}</PRE>
+Note that we have consulted the <TT>Viewable</TT>'s metadata for the
+values <TT>xaxisReversed</TT> and <TT>yaxisReversed</TT>.  If values are
+found there, they are passed to the <TT>ImageDisplayMap</TT> object;
+otherwise, the default value of false is kept.
+<P>
+Now let's look at <TT>updatePixelMap</TT> which is called whenever a new
+slice is displayed:
+<PRE>    protected synchronized void updatePixelMap(Slice dataSlice, 
+                                               Rectangle displayRegion) {
+        int dwd=-1, dht=-1;
+
+        if (pixelMap == null) {
+            setPixelMap(dataSlice, displayRegion);    
+            return;                 // this calls updatePixelMap(),
+                                    //   so we should return
+        }
+        if (dataSlice == null &amp;&amp; displayRegion == null) return;
+
+        if (displayRegion == null) {
+            dwd = dataSlice.getTrueLength(slice.getXaxis());
+            dht = dataSlice.getTrueLength(slice.getYaxis());
+
+            // this is how much space an image with an unscaled size of 
+            // wd x ht will take up on the screen
+            //
+            Dimension dispdim = display.viewSize(dwd, dht);
+            displayRegion = new Rectangle(0, 0, dispdim.width, dispdim.height);
+        }
+
+        if (dataSlice != null) pixelMap.setSlice(dataSlice);
+        if (displayRegion != null) pixelMap.setDisplay(displayRegion);
+    }</PRE>
+As it turns out in our implementation, the value of
+<TT>displayRegion</TT> is always <TT>null</TT>, so the default--as much as
+the display area as possible--is used instead.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

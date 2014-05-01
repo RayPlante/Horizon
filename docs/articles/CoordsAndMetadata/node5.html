@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Horizon Metadata Class</TITLE>
+<META NAME="description" CONTENT="The Horizon Metadata Class">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html162" HREF="node6.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html160" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html154" HREF="node4.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html164" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html163" HREF="node6.html">Reserved Metadatum Names: schema </A>
+<B>Up:</B> <A NAME="tex2html161" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html155" HREF="node4.html">What are Metadata?</A>
+<BR> <P>
+<H2><A NAME="SECTION00032000000000000000">The Horizon <TT>Metadata</TT> Class</A></H2>
+<P>
+<A NAME="SMetadataCls">&#160;</A>
+<P>
+The Horizon package encapsulates the concept of metadata into a class
+called <TT>ncsa.horizon.util.Metadata</TT>.  This class is very similar
+to the <TT>java.util.Properties</TT> class, sharing much of its
+interface as well as implementation.  Like <TT>Properties</TT>,
+<TT>Metadata</TT> is a subclass of <TT>java.util.Hashtable</TT> which
+provides the storage and lookup functions of the container.  For
+example, one can use the <TT>Hashtable</TT> method <TT>put</TT> to load
+data into the <TT>Metadata</TT> object:
+
+<P>
+<PRE>Metadata mdata = new Metadata();
+mdata.put(&quot;instrument&quot;, &quot;Wide-field Camera&quot;);
+mdata.put(&quot;altitude&quot;, new Double(4036.2));</PRE>
+<P>
+<TT>Metadata</TT>'s main difference with <TT>Properties</TT> is that the
+value of a key-value pair is not restricted to be a <TT>String</TT>
+object.  Given a <TT>Metadata</TT> object, one can extract the value of
+an individual metadatum it contains:
+<PRE>Metadata mdata;
+...
+String instr = (String) mdata.getMetadatum(&quot;instrument&quot;);
+Double alt = (Double) mdata.getMetadatum(&quot;altitude&quot;);
+Metadata cmdata = (Metadata) mdata.getMetadatum(&quot;coordinateSystem&quot;);</PRE>
+If a requested metadatum is not found in the metadata list,
+<TT>getMetadatum</TT> will return <TT>null</TT>.
+<P>
+There are a few things to note in the above example.  First is that
+since the <BR>[4] <TT>getMetadatum(String)</TT> method returns the
+type <TT>Object</TT>, one must cast it to its specific type.  This, of
+course, requires that we know what the type should be, reflecting the
+inescapable assumption about the meaning of each of metadatum name.
+It is possible that the data might have been loaded into the <TT>Metadata</TT>
+container with the wrong type; thus, one or more of the statements
+could throw a <TT>ClassCastException</TT>.  If this is a concern that
+you want to catch, you might handle the error explicitly:
+<P>
+<PRE>String instr;
+Double alt;
+Metadata cmdata;
+try {
+   instr = (String) mdata.getMetadatum(&quot;instrument&quot;);
+   alt = (Double) mdata.getMetadatum(&quot;altitude&quot;);
+   cmdata = (Metadata) mdata.getMetadatum(&quot;coordinateSystem&quot;);
+} 
+catch (ClassCastException ex) {
+   throw new 
+       MetadataTypeException(&quot;Encountered metadatum of incorrect type&quot;);
+
+   // Note that MetadataTypeException is a RuntimeException; users of this
+   // method are not required to catch the exception.
+}</PRE>
+<P>
+Another thing to note about this example is that a <TT>Metadata</TT>
+<BR>[3] object can contain other <TT>Metadata</TT> objects.  In our
+example, the ``CoordinateSystem'' metadatum is actually a <TT>Metadata</TT>
+object containing all the metadata describing the coordinate system.
+Thus metadata can be stored hierarchically.  What if I was interested
+in a particular metadatum within the ``CoordinateSystem'' metadata
+list, say the value of ``naxes''?  In this example, ``naxes'' is
+considered <em>sub-metadatum</em> of ``CoordinateSystem''.  The
+<TT>Metadata</TT> class provides a short-cut accessing such sub-metadata:
+<PRE>Integer naxes = (Integer) mdata.getMetadatum(&quot;CoordinateSystem.naxes&quot;);</PRE>
+This is equivalent to 
+<PRE>Integer naxes = 
+    (Integer) mdata.getMetadatum(&quot;CoordinateSystem&quot;).getMetadatum(&quot;naxes&quot;);</PRE>
+except that the latter version might throw a
+<TT>NullPointerException</TT> if the ``CoordinateSystem'' datum does not
+exist.  In the former case, <TT>getMetadatum</TT> will return
+<TT>null</TT> if either ``CoordinateSystem'' does not exist or ``naxes''
+does not exist in the ``CoordinateSystem'' list.  (It will also return
+<TT>null</TT> if the ``CoordinateSystem'' metadatum is not of type
+<TT>Metadata</TT>.)  Note that one <em>cannot</em> use the sub-metadata syntax
+to update hierarchical metadata.
+<P>
+<BR> <HR>
+<UL><A NAME="CHILD_LINKS">&#160;</A>
+<LI> <A NAME="tex2html165" HREF="node6.html#SECTION00032100000000000000">Reserved Metadatum Names: schema and schemaVersion</A>
+<LI> <A NAME="tex2html166" HREF="node7.html#SECTION00032200000000000000">Possible Pitfalls and Safety Nets</A>
+<UL>
+<LI> <A NAME="tex2html167" HREF="node8.html#SECTION00032210000000000000">Use only <TT>String</TT> objects as keys.</A>
+<LI> <A NAME="tex2html168" HREF="node9.html#SECTION00032220000000000000">Use Consistant Value Types When Reading and Writing Metadata.</A>
+<LI> <A NAME="tex2html169" HREF="node10.html#SECTION00032230000000000000">Handle Updateable Metadata Values With Care.</A>
+</UL>
+</UL>
+<HR><A NAME="tex2html162" HREF="node6.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html160" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html154" HREF="node4.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html164" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html163" HREF="node6.html">Reserved Metadatum Names: schema </A>
+<B>Up:</B> <A NAME="tex2html161" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html155" HREF="node4.html">What are Metadata?</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Basic Use</TITLE>
+<META NAME="description" CONTENT="Basic Use">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html386" HREF="node24.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html384" HREF="node22.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html378" HREF="node22.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html388" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html387" HREF="node24.html">Use Outside of a </A>
+<B>Up:</B> <A NAME="tex2html385" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html379" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<BR> <P>
+<H3><A NAME="SECTION00043100000000000000">Basic Use</A></H3>
+<P>
+<A NAME="Sctbasics">&#160;</A>
+<P>
+A <TT>CoordTransform</TT> object is most commonly used by attaching it
+to a <TT>CoordinateSystem</TT> via one of the latter's
+<TT>attachTransform()</TT> methods.  This causes the
+<TT>CoordinateSystem</TT> to automatically apply the transform everytime
+positions are requested from the system.  For example, suppose we have
+a <TT>CoordinateSystem</TT> that calculates positions in some space that is 
+defined by a reference point:
+<PRE>CoordinateSystem csys;
+...
+Metadata md = csys.getMetadata();
+System.out.println( &quot;reference point for first axis: &quot; + 
+	            md.getMetadata(&quot;Axes[0].refposition&quot;));
+/* 
+ * OUTPUT:
+ * reference point for first axis: 7.0
+ */
+
+double[] datapos = { 1.0, 2.5, 5.0 };
+CoordPos cpos = csys.getCoordPos(datavox);
+System.out.println( cpos.getValueString(0) )  
+
+/* 
+ * OUTPUT:
+ * 7.0
+ */</PRE>
+Suppose further that we would like the positions that are printed out
+to be relative to the reference point, rather than absolute
+positions.  We can think of this as transforming the positions to a
+new coordinate system; that is, we will convert them from  from an
+absolute system to a relative system.  To do this we can apply the
+<TT>AbsToRelCoordTransform</TT> to the <TT>CoordinateSystem</TT>:
+<PRE>// we want to convert positions along 3 of the axes
+CoordTransform conversion = new AbsToRelCoordTransform(3);
+
+// attach the transform to the coordinate system
+try{ 
+    csys.attachTransform(conversion);
+} 
+catch (IllegalTransformException ex) {
+    System.err.println(&quot;Unable to attach transform: &quot; + ex.getMessage());
+}
+
+// the transform get automatically applied
+datapos = { 1.0, 2.5, 5.0 };
+cpos = csys.getCoordPos(datavox);
+System.out.println( cpos.getValueString(0) )  
+
+/* 
+ * OUTPUT:
+ * -6.0
+ */</PRE>
+When the tranform object <TT>conversion</TT> in this example was
+``attached'' to the coordinate system, it took a peek into the
+system's metadata to find out what its native reference position was
+and then adjusted its own internal parameters so that it can properly
+perform the conversion to relative coordinates.
+<P>
+Now suppose we no longer want to positions relative to the system's
+native reference point, but rather relative to some other point:
+<PRE>// First remove the previous transform we just applied
+csys.popTransform();
+
+// Create a new transform using our reference point.  The third
+// argument to the constructor tells the transform not to use 
+// the native reference position when it is attached to a coordinate 
+// system (see API for details).  
+//
+double[] refpos = { 5.5, 1.98, 10 };    // our referenct point
+conversion = new AbsToRelCoordTransform(3, refpos, false);
+
+// attach new transform
+try{ 
+    csys.attachTransform(conversion);
+} 
+catch (IllegalTransformException ex) {
+    System.err.println(&quot;Unable to attach transform: &quot; + ex.getMessage());
+}
+
+// now the new transform will be used
+datapos = { 1.0, 2.5, 5.0 };
+cpos = csys.getCoordPos(datavox);
+System.out.println( cpos.getValueString(0) )  
+
+/* 
+ * OUTPUT:
+ * -4.5
+ */</PRE>
+<P>
+In the above example, the transform applies (by default) itself to (at
+most) the first three axes of the system.  However, sometimes the
+desired application of a transform is a little more complicated.
+Consider for example a 3-dimensional astronomical image whose axes are
+frequency, right ascension, and declination<A NAME="tex2html10" HREF="footnode.html#456"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A>: 
+<PRE>Viewable astroimage;
+...
+CoordinateSystem csys = astroimage.getCoordinateSystem();
+
+// display coordinates of the dataset origin
+double origin = {0.0, 0.0, 0.0};
+CoordPos cpos = csys.getCoordPos(origin);
+System.out.prinln( cpos.getAxisLabel(0) + &quot;: &quot; + cpos.getValueString(0) );
+System.out.prinln( cpos.getAxisLabel(1) + &quot;: &quot; + cpos.getValueString(1) );
+System.out.prinln( cpos.getAxisLabel(2) + &quot;: &quot; + cpos.getValueString(2) );
+
+/*
+ * OUTPUT:
+ * Frequency: 115.98 GHz
+ * Right Ascension: 14:32:42.05
+ * Declination: 27:02:13.3
+ */</PRE>
+Suppose now that instead of right ascension and declination, we would
+like positions in terms of Galactic longitude and latitude.  We might
+do the following:
+<PRE>CoordTransform conversion = new CelToGalCoordTransform();
+
+// attach the transform to the coordinate system
+try{ 
+    csys.attachTransform(conversion);
+} 
+catch (IllegalTransformException ex) {
+    System.err.println(&quot;Unable to attach transform: &quot; + ex.getMessage());
+}
+
+// now the new transform will be used
+CoordPos cpos = csys.getCoordPos(origin);
+System.out.prinln( cpos.getAxisLabel(0) + &quot;: &quot; + cpos.getValueString(0) );
+System.out.prinln( cpos.getAxisLabel(1) + &quot;: &quot; + cpos.getValueString(1) );
+System.out.prinln( cpos.getAxisLabel(2) + &quot;: &quot; + cpos.getValueString(2) );
+
+/*
+ * OUTPUT:
+ * Frequency: 115.98 GHz
+ * Galactic Longitude: 38.123513
+ * Galactic Latitude: 66.984528
+ */</PRE>
+The transform object did more than just convert right ascension and
+declination into Galactic longitude and latidute, updating the labels
+appropriately.  When it was attached, it actually had to figure out
+which axes were the ones it needed to operate on.  That is, the
+transform knows that converts between celestial coordinates and
+galactic coordinates, and therefore looked for axes named ``Right
+Ascension'' and ``Declination'' (by examining the <TT>CoordinateSystem</TT>'s
+metadata); if it did not find them, a <TT>IllegalTransformException</TT>
+would have been thrown during attachment.
+<P>
+What if the coordinate system was already in terms of Galactic
+longitude and latitude and you wanted to convert positions to
+celestial coordinates?  One can attach <TT>CoordTransform</TT> objects
+backwards to have the reverse transform applied.  For example:
+<PRE>// attach the transform to the coordinate system; the second argument 
+// tells the system to attach the transform in the reverse direction.
+try{ 
+    csys.attachTransform(conversion, false);
+} 
+catch (IllegalTransformException ex) {
+    System.err.println(&quot;Unable to attach transform: &quot; + ex.getMessage());
+}</PRE>
+<P>
+Instead of having the <TT>CoordTransform</TT> figure out how it is suppose to
+be applied, you can give explicit instructions via the
+<TT>CoordTransformConstraints</TT> class.  This class can provide the
+two basic pieces of information needed, namely the direction the
+transform should be applied and something referred to as the Axis
+Index List which indicates which axes should be transformed and the
+order in which they should be interpreted.
+<P>
+To understand the Axis Index List, consider our example above
+converting celestial coordinates to galactic coordinates.  The
+<TT>CelToGalCoordTransform</TT> by default expects that its first axis
+(axis # 0) will be a right ascension axis and the second axis (axis
+# 1) will be declination.  That of course is not the order in which
+they actually appear in our data set.  The
+<TT>CoordTransformConstraints</TT> class allows us to indicate that the
+axis that our transform expects at position 0 is actually at position
+1:
+<PRE>// Create a CoordTransformConstraint to describe how to apply the 
+// transform:
+CoordTransformConstraint constraints = new CoordTransformConstraint();
+
+// the transform will be attached in the forward direction
+constraints.forward = true;
+
+// The transform by default wants the right ascension axis at axis
+// position 0;  indicate that instead this axis will be at position 1.
+constraints.setAxisAt(0, 1);
+
+// The transform by default wants the declination axis at axis
+// position 1;  indicate that instead this axis will be at position 2.
+constraints.setAxisAt(1, 2);
+
+// Now attach our transform
+csys.attachTransform(conversion, constraints);</PRE>
+Note that when we attach a tranform using a
+<TT>CoordTransformConstraints</TT> object, we do not need to be prepared
+to catch an <TT>IllegalTransformException</TT>.  With the constraints,
+the <TT>CoordTransform</TT> does not need to check the system's metadata;
+thus, we have essentially ``forced'' the transform onto the system.
+<P>
+<HR><A NAME="tex2html386" HREF="node24.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html384" HREF="node22.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html378" HREF="node22.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html388" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html387" HREF="node24.html">Use Outside of a </A>
+<B>Up:</B> <A NAME="tex2html385" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html379" HREF="node22.html">Converting Between Multiple Coordinate </A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

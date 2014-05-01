@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Updating the coordinate display</TITLE>
+<META NAME="description" CONTENT="Updating the coordinate display">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html522" HREF="node36.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html520" HREF="node32.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html516" HREF="node34.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html524" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html523" HREF="node36.html">The Viewable: Loading the </A>
+<B>Up:</B> <A NAME="tex2html521" HREF="node32.html">The Viewer: Getting and </A>
+<B> Previous:</B> <A NAME="tex2html517" HREF="node34.html">Configuring the ImageDisplayMap Object</A>
+<BR> <P>
+<H3><A NAME="SECTION00051300000000000000">Updating the coordinate display</A></H3>
+<P>
+Now the <TT>ImageDisplayMap</TT> object is up to date, the viewer is
+ready to display coordinate positions.  New positions are displayed
+whenever the user moves the mouse, so here is the viewer's
+<TT>mouseMove()</TT> method.  
+<PRE>    public boolean mouseMove(Event event, int x, int y) {
+
+        // only handle event if it occurred within the ImageCanvas
+        // display; update the position display using a display 
+        // pixel that is relative to the ImageCanvas display's origin
+        if (display == locate(x, y)) {
+            Point displayOrigin = display.location();
+            updatePosDisplay(x-displayOrigin.x, y-displayOrigin.y);
+        }
+        return false;
+    }</PRE>
+<P>
+In this method, we pass the display pixel location to a method called
+<TT>updatePosDisplay()</TT> which does the actual work.  Here's what
+that method looks like:
+<PRE>protected void updatePosDisplay(int x, int y) {
+
+    if (pixelMap == null) return;
+
+    // First translate the display pixel to a data pixel; 
+    Voxel dvox = pixelMap.getDataVoxel(new Point(x, y));
+
+    // display the selected data pixel.  Here we will display the
+    // the selection as an integer.
+    double dxpos = Math.floor(pixelMap.getXDataPos(dvox));
+    double dypos = Math.floor(pixelMap.getYDataPos(dvox));
+    xDataPos.setText(Double.toString(dxpos));
+    yDataPos.setText(Double.toString(dypos));
+
+    // Now translate the data pixels to coordinate positions
+    if (coordSys != null) {
+
+        // convert to a coordinate position and display it.
+        try {
+            CoordPos cpos = coordSys.getCoordPos(dvox);
+            xCoordPos.setText(cpos.valueString(slice.getXaxis(), 2));
+            yCoordPos.setText(cpos.valueString(slice.getYaxis(), 2));
+        } 
+        catch (CoordTransformException ex) {
+            xCoordPos.setText(&quot;Undefined&quot;);
+            yCoordPos.setText(&quot;Undefined&quot;);
+        }
+    }
+}</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

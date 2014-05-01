@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Contents</TITLE>
+<META NAME="description" CONTENT="Contents">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html67" HREF="node2.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html65" HREF="CoordsAndMetadata.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html59" HREF="CoordsAndMetadata.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A>   <BR>
+<B> Next:</B> <A NAME="tex2html68" HREF="node2.html">Motivation and Context</A>
+<B>Up:</B> <A NAME="tex2html66" HREF="CoordsAndMetadata.html">Supporting Metadata and Coordinate </A>
+<B> Previous:</B> <A NAME="tex2html60" HREF="CoordsAndMetadata.html">Supporting Metadata and Coordinate </A>
+<BR> <P>
+<P><H2><A NAME="SECTION00010000000000000000">Contents</A></H2>
+<UL><A NAME="CHILD_LINKS">&#160;</A>
+<LI> <A NAME="tex2html69" HREF="node2.html#SECTION00020000000000000000">Motivation and Context</A>
+<LI> <A NAME="tex2html70" HREF="node3.html#SECTION00030000000000000000">The Horizon Metadata Model</A>
+<UL>
+<LI> <A NAME="tex2html71" HREF="node4.html#SECTION00031000000000000000">What are Metadata?</A>
+<LI> <A NAME="tex2html72" HREF="node5.html#SECTION00032000000000000000">The Horizon <TT>Metadata</TT> Class</A>
+<UL>
+<LI> <A NAME="tex2html73" HREF="node6.html#SECTION00032100000000000000">Reserved Metadatum Names: schema and schemaVersion</A>
+<LI> <A NAME="tex2html74" HREF="node7.html#SECTION00032200000000000000">Possible Pitfalls and Safety Nets</A>
+<UL>
+<LI> <A NAME="tex2html75" HREF="node8.html#SECTION00032210000000000000">Use only <TT>String</TT> objects as keys.</A>
+<LI> <A NAME="tex2html76" HREF="node9.html#SECTION00032220000000000000">Use Consistant Value Types When Reading and Writing Metadata.</A>
+<LI> <A NAME="tex2html77" HREF="node10.html#SECTION00032230000000000000">Handle Updateable Metadata Values With Care.</A>
+</UL> 
+</UL> 
+<LI> <A NAME="tex2html78" HREF="node11.html#SECTION00033000000000000000">Protecting Metadata Via Defaults</A>
+<LI> <A NAME="tex2html79" HREF="node12.html#SECTION00034000000000000000">Handling Arrays: The Horizon <TT>Metavector</TT> Class</A>
+<LI> <A NAME="tex2html80" HREF="node13.html#SECTION00035000000000000000">On-Demand Data Loading: The Horizon <TT>Metarunner</TT> Class</A>
+</UL> 
+<LI> <A NAME="tex2html81" HREF="node14.html#SECTION00040000000000000000">The World Coordinate System Classes</A>
+<UL>
+<LI> <A NAME="tex2html82" HREF="node15.html#SECTION00041000000000000000">Coordinate System Metadata</A>
+<UL>
+<LI> <A NAME="tex2html83" HREF="node16.html#SECTION00041100000000000000">Using Metadata to Construct CoordinateSystems</A>
+<LI> <A NAME="tex2html84" HREF="node17.html#SECTION00041200000000000000">The Horizon Schema for Coordinate Systems</A>
+</UL> 
+<LI> <A NAME="tex2html85" HREF="node18.html#SECTION00042000000000000000">Example Coordinate Systems</A>
+<UL>
+<LI> <A NAME="tex2html86" HREF="node19.html#SECTION00042100000000000000"><TT>CoordinateSystem</TT>: the Simplest System</A>
+<LI> <A NAME="tex2html87" HREF="node20.html#SECTION00042200000000000000"><TT>LinearCoordinateSystem</TT>: a System With Linear Axes</A>
+<LI> <A NAME="tex2html88" HREF="node21.html#SECTION00042300000000000000"><TT>LinSphCoordinateSystem</TT>: Combining Spherical and
+Linear Coordinates</A>
+</UL> 
+<LI> <A NAME="tex2html89" HREF="node22.html#SECTION00043000000000000000">Converting Between Multiple Coordinate Systems</A>
+<UL>
+<LI> <A NAME="tex2html90" HREF="node23.html#SECTION00043100000000000000">Basic Use</A>
+<LI> <A NAME="tex2html91" HREF="node24.html#SECTION00043200000000000000">Use Outside of a <TT>CoordinateSystem</TT></A>
+<LI> <A NAME="tex2html92" HREF="node25.html#SECTION00043300000000000000">Implementing New <TT>CoordTransform</TT> Classes</A>
+<UL>
+<LI> <A NAME="tex2html93" HREF="node26.html#SECTION00043310000000000000"><TT>getInAxes(), getOutAxes()</TT></A>
+<LI> <A NAME="tex2html94" HREF="node27.html#SECTION00043320000000000000"><TT>determineConstraints(Metadata in, boolean forwards)</TT></A>
+<LI> <A NAME="tex2html95" HREF="node28.html#SECTION00043330000000000000"><TT>init(CoordinateSystem csys, boolean forward, int[]
+                 axisIndexList)</TT></A>
+<LI> <A NAME="tex2html96" HREF="node29.html#SECTION00043340000000000000"><TT>getMetadata(Metadata in, boolean forward, int[] axisIndices)</TT></A>
+</UL> 
+</UL> 
+<LI> <A NAME="tex2html97" HREF="node30.html#SECTION00044000000000000000">Implementing a New Coordinate System</A>
+</UL> 
+<LI> <A NAME="tex2html98" HREF="node31.html#SECTION00050000000000000000">Putting It All Together:  the <TT>CoordDemoApplet</TT></A>
+<UL>
+<LI> <A NAME="tex2html99" HREF="node32.html#SECTION00051000000000000000">The Viewer: Getting and Displaying Positions</A>
+<UL>
+<LI> <A NAME="tex2html100" HREF="node33.html#SECTION00051100000000000000">The <TT>ImageDisplayMap</TT> Class</A>
+<LI> <A NAME="tex2html101" HREF="node34.html#SECTION00051200000000000000">Configuring the <TT>ImageDisplayMap</TT> Object</A>
+<LI> <A NAME="tex2html102" HREF="node35.html#SECTION00051300000000000000">Updating the coordinate display</A>
+</UL> 
+<LI> <A NAME="tex2html103" HREF="node36.html#SECTION00052000000000000000">The Viewable: Loading the Proper Metadata</A>
+</UL> 
+<LI> <A NAME="tex2html104" HREF="node37.html#SECTION00060000000000000000">Metadata Lexicons</A>
+<UL>
+<LI> <A NAME="tex2html105" HREF="node38.html#SECTION00061000000000000000">Universal Metadata</A>
+<LI> <A NAME="tex2html106" HREF="node39.html#SECTION00062000000000000000">The Horizon Schema</A>
+<UL>
+<LI> <A NAME="tex2html107" HREF="node40.html#SECTION00062100000000000000">Viewable Metadata</A>
+<LI> <A NAME="tex2html108" HREF="node41.html#SECTION00062200000000000000">Coordinate System Metadata</A>
+<LI> <A NAME="tex2html109" HREF="node42.html#SECTION00062300000000000000">Coordinate Axis Metadata</A>
+</UL> 
+</UL> 
+<LI> <A NAME="tex2html110" HREF="node43.html#SECTION00070000000000000000">  About this document ... </A>
+</UL>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

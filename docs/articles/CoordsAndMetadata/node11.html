@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Protecting Metadata Via Defaults</TITLE>
+<META NAME="description" CONTENT="Protecting Metadata Via Defaults">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html232" HREF="node12.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html230" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html224" HREF="node10.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html234" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html233" HREF="node12.html">Handling Arrays: The Horizon </A>
+<B>Up:</B> <A NAME="tex2html231" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html225" HREF="node10.html">Handle Updateable Metadata Values </A>
+<BR> <P>
+<H2><A NAME="SECTION00033000000000000000">Protecting Metadata Via Defaults</A></H2>
+<P>
+<A NAME="Sdefaults">&#160;</A>
+<P>
+The <TT>Metadata</TT> class shares another important feature of the
+<TT>Properties</TT> class in its the support for default values; that
+is, <TT>Metadata</TT> objects can store two sets of data within themselves:
+primary data and default data. Calls to <TT>getMetadatum(String)</TT>
+will return requested data from the primary set; if it does not exist
+there, the data in the default list is searched for a value.  (One can
+prevent the search of the default set by calling
+<TT>getMetadatum(String, null)</TT>.)
+<P>
+The default data are stored as a protected <TT>Metadata</TT> <BR>[1]
+field within the primary <TT>Metadata</TT> class and can only be set during
+construction.  The <TT>Metadata</TT> class interface never gives out a
+reference to the defaults list, preventing client objects from adding,
+removing, or replacing any of its contents.  Many Horizon classes
+exploit this feature as a way of keeping exclusive control of the
+metadata that they manage but still allow read-only access to the
+metadata.  For example, the <TT>CoordinateSystem</TT> class can share its
+metadata with other objects via its <TT>getMetadata</TT> method;
+however, it probably does not want to allow other objects to alter the
+metadata list.  So, it has two choices: it can either clone the
+<TT>Metadata</TT> list and return the new copy:
+<PRE>protected Metadata mdata;
+...
+public Metadata getMetadata() {
+    return mdata.clone();
+}</PRE>
+or it can use a ``protection'' technique by creating a new <TT>Metadata</TT>
+list with <TT>CoordinateSystem</TT>'s own <TT>Metadata</TT> as the default:
+<PRE>protected Metadata mdata;
+...
+public Metadata getMetadata() {
+    return new Metadata(mdata);
+}</PRE>
+<P>
+Why wouldn't the <TT>CoordinateSystem</TT> object want to return a
+clone?  That depends in part on how <TT>clone</TT> is implemented.  The
+deepest possible <TT>clone</TT> implementation would clone both the
+primary and default hashtables plus each object in the hashtables.
+This could potentially be an expensive operation if the tables contain
+a lot of data, and it could be inefficient if much of the data is of a
+non-updatable type (e.g. <TT>Double</TT>).  A less deep clone would
+clone only the primary hashtable and the default <TT>Metadata</TT> list;
+however, this also could get expensive if the default list has a
+default list of its own which also has a default list and so on.  By
+contrast, the ``protection'' implementation for <TT>getMetadata</TT>
+does not clone any hashtables; the biggest overhead incurred is in the
+creation of a single empty hashtable.
+<P>
+In actuality, the <TT>Metadata</TT>'s <TT>clone</TT> method only clones the
+primary hastable which may or may not be an expensive operation.
+Nevertheless, there are some advantages the ``protection'' technique
+provides to client objects.  Suppose object <TT>aClient</TT> calls a
+<TT>CoordinateSystem</TT>'s <TT>getMetadata</TT> method which returns a
+<TT>Metadata</TT> object using the ``protection'' technique.  <TT>aClient</TT>
+is free to update its <TT>Metadata</TT> list without affecting the copy help
+the <TT>CoordinateSystem</TT>; replacement operations really only hide
+the original values.  Thus, <TT>aClient</TT> can return to the default
+value later, if necessary, by removing any data its added.  If, by
+contrast, <TT>aClient</TT> had gotten a clone, updates would have
+removed the original values of the primary hashtable.  Another feature
+relates to the fact that the <TT>CoordinateSystem</TT> still has a
+reference to the list being used as the defaults of <TT>aClient</TT>'s
+list; in this case, we say that <TT>aClient</TT>'s <TT>Metadata</TT> object is
+``attached'' to the <TT>CoordinateSystem</TT>.  The consequence of this
+is that whenever <TT>aClient</TT> calls the <TT>getMetadatum</TT> method,
+it is guaranteed to get the most up-to-date value for the metadatum
+in use by the <TT>CoordinateSystem</TT>.
+<P>
+Client objects may not want their <TT>Metadata</TT> objects to have such close
+connections with the <TT>Metadata</TT>'s originator.  Therefore, the <TT>Metadata</TT>
+class provides a variety of methods offering different levels of
+cloning and ``attachment'':
+<UL><TT>
+<LI> void setDefaults(Metadata)
+<LI> Metadata getDefaults()
+<LI> void detach()
+<LI> Object clone()
+<LI> Metadata detachedClone()
+<LI> Metadata cloneDefaults()
+<LI> Metadata deepClone()
+</UL></TT>
+For instance, <TT>aClient</TT> could remove the defaults list in its
+<TT>Metadata</TT> object by calling <TT>setDefaults(null)</TT>.  A less severe
+and usually more useful alternative would be to call <TT>detach()</TT>
+which replaces the defaults list with a clone.<A NAME="tex2html6" HREF="footnode.html#671"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A>
+As a result, any changes the <TT>CoordinateSystem</TT> makes to its
+metadata list will not affect the list held by <TT>aClient</TT>.
+<P>
+Of course, protecting metadata in a defaults list does not protect
+against updates to data internal to the objects contained within the
+list.  Following our above example, suppose <TT>aClient</TT> gets a
+<TT>double[]</TT> array from the <TT>Metadata</TT> object it got from
+<TT>CoordinateSystem</TT>.  It can now change the value of one of the elements
+of that array.  The next time the <TT>CoordinateSystem</TT> accesses the
+array, it would see the update.  The moral here is that if you want
+client objects to only have <em>complete, deep</em> read-only access to
+a <TT>Metadata</TT> list, do not use updateable objects as values in that
+list.  The exceptions to this rule, however, are <TT>Metavector</TT> objects
+and other <TT>Metadata</TT> objects.
+<P>
+The <TT>Metadata</TT> class takes special care when a metadatum value is of
+type <TT>Metadata</TT>.  If the <TT>getMetadatum</TT> method must resort to
+getting a value from the default list and if that value is itself of
+type <TT>Metadata</TT>, then it will not return a direct reference to the
+sub-<TT>Metadata</TT>; instead it will set it as the default list in a new
+<TT>Metadata</TT> instance which is then returned, thus protecting it from
+updates by the client.
+<P>
+Arrays are often too useful to avoid using to hold metadata;
+therefore, the Horizon package also provides the <TT>Metavector</TT> class
+(described in &#167;<A HREF="node12.html#SMetavector">2.4</A>) for this purpose.  A <TT>Metavector</TT>
+is much like a <TT>Metadata</TT> object, including its support for default
+data; the difference is that instead of using a hashtable for storing
+its data, it uses an array.  The <TT>Metadata</TT> class will also watch out
+for <TT>Metavector</TT> objects extracted from the defaults list, protecting
+them when necessary.
+<P>
+In summary, the defaults Metadata list can provide a read-only access
+to metadata, limited by whether or not the stored values are of an
+updateable type.  Full read-only access can be achieved if the only
+updateable classes used are <TT>Metadata</TT> and <TT>Metavector</TT>.  This should be
+sufficient for most cases, because the <TT>Metadata</TT> class can be
+considered a kind of structure (as in C programming)--a class with
+only fields but no methods.  In place of the methods, a metadata list
+is governed by the schema definition for handling the data.  Of
+course, a <TT>Metadata</TT> object is not as powerful as a full-featured
+class; however, one of the main purposes of the <TT>Metadata</TT> class is to
+provide a container for transporting this information, particularly
+from persistant storage like a data file of a specific format.  Once
+carried to the part of the code that will process the data, the data
+can be converted into a fully intelligent class.  In fact, this is
+what is done with the Horizon coordinate classes, the topic of section
+&#167;<A HREF="node14.html#SWCS">3</A>.
+<P>
+<HR><A NAME="tex2html232" HREF="node12.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html230" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html224" HREF="node10.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html234" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html233" HREF="node12.html">Handling Arrays: The Horizon </A>
+<B>Up:</B> <A NAME="tex2html231" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html225" HREF="node10.html">Handle Updateable Metadata Values </A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

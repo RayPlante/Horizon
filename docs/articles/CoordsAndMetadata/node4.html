@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>What are Metadata?</TITLE>
+<META NAME="description" CONTENT="What are Metadata?">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html151" HREF="node5.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html149" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html143" HREF="node3.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html153" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html152" HREF="node5.html">The Horizon Metadata Class</A>
+<B>Up:</B> <A NAME="tex2html150" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html144" HREF="node3.html">The Horizon Metadata Model</A>
+<BR> <P>
+<H2><A NAME="SECTION00031000000000000000">What are Metadata?</A></H2>
+<P>
+<A NAME="Saboutmeta">&#160;</A>
+<P>
+Horizon defines <em>metadata</em> simply to be data about data; more
+specifically, it is ancillary data that provides information for
+intelligent interpretation of a primary set of data.  In the case of
+an image dataset which might contain temperature measurements, the
+metadata could include information like the measurement units
+(e.g. Celsius), the instruments used, the date and time of the
+measurements, and the parameters describing the domain or world
+coordinate system within which the image data reside.  Metadata as
+part of a dataset allows the dataset to be ``self-describing'', so
+that an application can adjust its handling of a dataset according to
+the values of the metadata.  Of course, there must be some convention
+assumed by users on the meaning of the metadata.
+<P>
+Self-description is a critical feature when transporting the data
+between different visualization and analysis tools which have
+different models or conventions for handling data.  The metadata,
+thus, can provide a guide for converting the data between the
+different conventions.  Thus, data formats specifically defined to be
+used for transporting scientific data, such as FITS and
+HDF<A NAME="tex2html2" HREF="footnode.html#667"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A>
+provide support for metadata.
+<P>
+Like the HDF and FITS formats, Horizon refines the definition of
+<em>metadatum</em> to be name-value pair where the name is a string
+identifying the information contained in the metadatum and the value
+is the the actual value.  The value can be of any type, primitive
+(e.g. integer, floating-point, etc.) or complex (e.g. a Java <TT>Object</TT>).
+A collection of metadatum objects is, of course, a metadata set.  Note
+that metadata names are conceptually different from the fields in a
+class definition when considered in the context of an object-oriented
+program: metadata should be arbitrarily accessible by their name at
+runtime, which is not (in general) the case for class field names.
+For instance, it is not straight-forward for an application to allow
+the user to request at runtime the value of any field of any arbitrary
+object by typing the object and field names into a text input
+box.<A NAME="tex2html3" HREF="footnode.html#41"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A>
+<P>
+The metadata name, of course, is a short identifier to represent some
+concept; for instance, ``instrument'' might be used as the name for
+the metadatum providing the name of the instrument used to make the
+measurement.  One caveat that may not be immediately obvious (but is
+an issue of much study and discussion) is that the mapping of the
+metadatum name to a value <em>always</em> assumes an agreement between
+the application that created the metadatum and the application that
+accesses it as to the conceptual meaning of the metadatum
+name.<A NAME="tex2html4" HREF="footnode.html#43"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A> In general, there is no
+way for dataset to be completely self-describing in the absense of any
+assumptions about what the data means.  The obvious side-effect of
+this situation is the inconsistant use of metadata between data
+formats and applications that have been developed independent of each
+other.  The different systems might use different names to mean the
+same thing (say, ``elevation'' and ``altitude'') and the same name to
+mean different things (say ``elevation'' to mean altitude in feet
+versus angle from the horizon in degrees).
+<P>
+The total set of mappings of metadatum names to definitions used by a
+system is often called the system's <em>schema</em>.  Identifying the
+schemata<A NAME="tex2html5" HREF="footnode.html#45"><IMG  ALIGN=BOTTOM ALT="gif" SRC="/usr/local/latex2html-96.1/icons/foot_motif.gif"></A> used by two systems provides
+some hope of transporting data between the systems.  Doing so,
+however, requires that the schemata be sufficiently well-defined to
+allow a translation.  This need has inspired format standard bodies to
+create detailed ``lexicons'' listing accepted metadata names and
+their meanings.
+<P>
+<HR><A NAME="tex2html151" HREF="node5.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html149" HREF="node3.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html143" HREF="node3.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html153" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html152" HREF="node5.html">The Horizon Metadata Class</A>
+<B>Up:</B> <A NAME="tex2html150" HREF="node3.html">The Horizon Metadata Model</A>
+<B> Previous:</B> <A NAME="tex2html144" HREF="node3.html">The Horizon Metadata Model</A>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

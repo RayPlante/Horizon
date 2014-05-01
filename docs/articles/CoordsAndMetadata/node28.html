@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1-h (September 30, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>init(CoordinateSystem csys, boolean forward, int[]
+                 axisIndexList)</TITLE>
+<META NAME="description" CONTENT="init(CoordinateSystem csys, boolean forward, int[]
+                 axisIndexList)">
+<META NAME="keywords" CONTENT="CoordsAndMetadata">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="CoordsAndMetadata.css">
+</HEAD>
+<BODY LANG="EN" >
+ <A NAME="tex2html443" HREF="node29.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="/usr/local/latex2html-96.1/icons/next_motif.gif"></A> <A NAME="tex2html441" HREF="node25.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="/usr/local/latex2html-96.1/icons/up_motif.gif"></A> <A NAME="tex2html435" HREF="node27.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="/usr/local/latex2html-96.1/icons/previous_motif.gif"></A> <A NAME="tex2html445" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="/usr/local/latex2html-96.1/icons/contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html444" HREF="node29.html">getMetadata(Metadata inboolean forward, </A>
+<B>Up:</B> <A NAME="tex2html442" HREF="node25.html">Implementing New CoordTransform Classes</A>
+<B> Previous:</B> <A NAME="tex2html436" HREF="node27.html">determineConstraints(Metadata inboolean forwards)</A>
+<BR> <P>
+<H4><A NAME="SECTION00043330000000000000"><TT>init(CoordinateSystem csys, boolean forward, int[]
+                 axisIndexList)</TT></A></H4>
+<P>
+This method is called by a <TT>CoordinateSystem</TT> (giving <TT>this</TT> as
+the first argument) whenever the transform gets attached to it.  It
+tells the transform, ``Hey, I'm attaching you in this direction using
+this Axis Index List''.  This gives the <TT>CoordTransform</TT> object the
+chance to update its internal data in a way that is most appropriate
+to that <TT>CoordinateSystem</TT>.  To do this, the <TT>CoordTransform</TT> may need
+retreive data the system's metadata list.
+<P>
+For example, consider our first example of attaching a
+<TT>AbsToRelCoordinateTransform</TT> in &#167;<A HREF="node23.html#Sctbasics">3.3.1</A>.  In this
+case, we wanted coordinate positions to be given relative to the
+system's native reference position.  When we attached the transform,
+the <TT>CoordinateSystem</TT> determines the constraints for the transform; if
+they were not given as an argument to <TT>attachTransform()</TT>, it
+will call the transform's <TT>determineConstraints()</TT> method.  It
+then passes the constraints back to the transform via its
+<TT>init()</TT> method.  Within this method, the transform accesses the
+values of the ``Axes[<em>n</em>].refposition'' metadata and stores them
+away to use in its transfromation between absolute and relative
+coordinates.
+<P>
+The default implementation of the <TT>init()</TT> method is an empty
+one; that is, it returns having done nothing.  If your transform does
+not need to update any of its internal data when it is attached to a
+<TT>CoordinateSystem</TT>, it is not necessary to override this method.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Ray Plante <BR>
+Mon Aug 25 15:16:12 CDT 1997</I>
+</ADDRESS>
+</BODY>
+</HTML>
