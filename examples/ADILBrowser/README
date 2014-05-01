@@ -1,0 +1,50 @@
+                           ADILBrowser
+
+ADILViewerApplet is an applet that uses the Horizon classes to browse
+images from the NCSA Astronomy Digital Image Library.  The applet
+contains two displays, side by side.  The left side is used to display
+the full image sub-sampled to fit within display region.  The right
+side contains a "zoomed" sub-region of the image.  One can click the
+mouse over a pixel in the left display to see a zoomed version
+centered on that pixel in the right display.
+
+Below the two displays is a position display panel which tracks the
+sky position corresponding to the current position of the mouse.  One
+can also pop-up the image's FITS header by clicking on the adjacent
+button.  
+
+The zooming factor can be changed by clicking the on one of the
+buttons below the position display or by entering a percent factor in
+the text field.  A factor 100% means that one data pixel is displayed
+into one display pixel.  Alternatively, one can enter choose the
+"Region" button; this allows one to draw a box in the left display
+indicating the region to appear in right display.  
+
+ADILViewerHabanero is a version of the applet that runs within the
+Habanero collaborative environment.  Within in this environment,
+several users on different machines may interact with the images
+together.  For example, when one participant chooses a new zoomed
+view, all participants will see it.  NOTE: this tool cannot be used
+without the Habanero environment installed. 
+
+RUNNING THIS DEMO:
+
+ADILViewerApplet can be run either as an applet or a standalone
+application; however, all of the features are only available when run
+as an applet.  To run as an applet, type,
+
+    appletviewer ADILViewerApplet.html
+
+You can also run this demo from our Web site at 
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples/index.html.
+
+To run as an application, type
+
+    java apps.ADILBrowser.ADILViewerApplet
+
+in the directory "examples/apps/ADILBrowser". Then either enter a URL and click
+"Get:", or choose a file from local disk using the "Browse:" button.
+
+
+
+ 

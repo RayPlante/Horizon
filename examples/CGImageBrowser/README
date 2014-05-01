@@ -1,0 +1,32 @@
+			   CGImageBrowser:
+		   Computer Graphics Image Browser
+
+This directory contains a demonstration of a simple browser for images
+supported natively by Java (i.e. GIF and JPEG).  It can be run as
+either an applet within the JDK appletviewer or as a standalone
+application.  To run them, you need have JDK 1.0.2 or higher
+(http://java.sun.com/products/JDK) already installed.  You also need
+to properly set your CLASSPATH to include the Horizon library of
+classes.  See Horizon/examples/README for details.
+
+To run this demo as a standalone application, one usually types
+something like,
+
+   java apps.CGImageBrowser.CGImageBrowser
+
+in this directory.  Alternatively, you could run the demo as an applet
+within the appletviewer that comes with Sun's JDK.  To start as an
+applet, type:
+
+   appletviewer CGImageBrowser.html
+
+You can also run this demo from our Web site at 
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples/index.html.
+
+The applet comes up initially ready to access an GIF or JPEG image
+over the Web.  You will find better performance, however, accessing
+local images. To access a local image, run as a standalone application
+(see above) and click on the "Browse..." button.  You should see as
+files in the current directory a collection of GIF and JPEG images to
+choose from.
+

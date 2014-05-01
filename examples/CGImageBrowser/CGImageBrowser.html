@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Computer Graphics Image Browser</title>
+</head>
+<body bgcolor="#C0C0C0">
+
+<center>
+<h3>CGImageBrowser:<br>
+A Computer Graphics Image Browser</h3>
+</center>
+
+This applet is a demonstration of a simple browser for images
+supported natively by Java (i.e. GIF and JPEG).  The particular Viewer
+it uses allows one to edit the location and appearance of the
+graphical data selections.  
+
+<center>
+<applet codebase="../../classes"
+        code="apps.CGImageBrowser.CGImageBrowser.class"
+        width=515 height=200>
+<center>
+<!-- datadir: the directory relative to the document base directory that
+              contains the image.  Be sure to include trailing slash.
+              The default is blank (i.e. the document base directory) -->
+<param NAME=datadir VALUE="../data/">
+
+<!-- imgFile: the image file name; no default.  The resulting URL
+              using to obtain the image will be
+              DocumentBaseDir + datadir + imgFile.                    -->
+<param NAME=imgFile VALUE="io.gif">
+
+<i>
+If you are reading this, your WWW browser can't or won't do Java(tm).
+Contact your browser supplier for technical assistance.
+</i>
+</applet>
+</center>
+
+Enter a URL above and hit RETURN in the text field to display the
+image.  The zoom button will open up a ZoomControl Panel for zooming
+in and out of the image.  To zoom, select a point in the display
+window with the left mouse button, select a zoom factor under "Zoom
+Over Selected Point", then click on "Zoom".  The view will be replaced
+with a zoomed view.  Alternatively, you can select a box to zoom to.
+To select a region, hold the right mouse key down while dragging the
+mouse across the image until the region of interest is enclosed.  To
+zoom to that selected box, click on the "Zoom to Box" button.  <p>
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Horizon Demo: SciDat1</title>
+</head>
+
+<center>
+<h3>SciDat1:<br>
+A Control Panel working with a Viewer</h3>
+</center>
+
+This applet shows an example of how a control panel (in this case, a
+ZoomControl Panel, on left) can cooperate with a Viewer (here, the
+SciDat1Viewer, a SelectionViewer) to add functionality to an applet.
+<p>
+
+This applet comes up with an image of the Center of our Galaxy as seen
+in radio waves.  <p>
+
+<applet codebase="../../classes"
+        code="apps.SciDat.SciDat1Applet.class" width=800 height=270>
+<!-- datadir: the directory relative to the document base directory that
+              contains the image.  Be sure to include trailing slash.
+              The default is blank (i.e. the document base directory) -->
+<param NAME=datadir VALUE="../data/">
+
+<!-- imgFile: the image file name; no default.  The resulting URL
+              using to obtain the image will be
+              DocumentBaseDir + datadir + imgFile.                    -->
+<param NAME=imgFile VALUE="GalacticCenter.gif">
+
+<em>If you can see this text, then your browser is not set to run Java
+applets.  </em> 
+</applet>
+
+The "Magnifier" button will turn on the Magnifier view to the
+right.  Clicking the left mouse button in the main window selects a
+data voxel which will update the magnifier view.  <p>
+
+You can replace the main view with a zoomed version by first selecting a
+data voxel in the main view.  Next selecting a zoom factor from the
+choice menu in the "Zoom Over Selected Point" portion of the Zoom
+Control; then press the "Zoom" button.  To zoom to an arbitrarily
+shaped box, click the box selector button under the pixel position
+display.  Then hold the left button down over the main view while
+dragging out a box.  After selecting a box in this manner, click the
+"Zoom to Box" button from the Zoom Control.  <p>
+
+</body>
+</html>

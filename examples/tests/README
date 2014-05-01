@@ -1,0 +1,98 @@
+This directory contains three sample demos of the Horizon package that
+may be run either as applets or as standalone applications.  To run
+them, you need have JDK 1.0.2 or higher (http://java.sun.com/products/JDK) 
+already installed.  You also need to properly set your CLASSPATH to
+include the Horizon library of classes.   See ../README for details.
+
+To run the demos as standalone applications (on UNIX systems), one
+usually types something like, 
+
+   java apps.tests.TestSimpleViewer
+
+in this directory.  Alternatively, you could run the demo as an applet
+within the appletviewer that comes with Sun's JDK.  To start as an
+applet, type
+
+   appletviewer TestSimple.html
+
+You can also run this demo from our Web site at 
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples/index.html.
+
+Those interested in getting a closer look at how one can use Horizon
+objects to build applets and applications are encouraged to study the
+source code for these test applets. 
+
+TestSimpleViewer
+================
+
+This is a test applet/application for the SimpleViewer implementation
+of the ncsa.horizon.viewer.Viewer abstract class, the SimpleViewable
+implementation of the ncsa.horizon.viewable.Viewable interface, and
+convenience class, ncsa.horizon.awt.SimpleFrame.
+
+To run as a standalone applications (on UNIX systems), one can usually
+type something like, 
+
+   java apps.tests.TestSimpleViewer
+
+in this directory. Alternatively, you could run the demo as an applet
+within the appletviewer that comes with Sun's JDK.  To start as an
+applet, type
+
+   appletviewer TestSimple.html
+
+The applet comes up initially ready to access an GIF image over the
+Web.  You will find better performance, however, accessing local
+images. To access a local image, run as a standalone application (see
+above) and click on the "Browse..." button.  You should see as files
+in the current directory two GIF images and one JPEG image: io.gif,
+GalacticCenter.gif, and hurricane.jpg.
+
+(JDK 1.1 is expected to bring improvement in performance to Horizon
+applets.) 
+
+TestBasicSelectionViewer
+========================
+
+This demonstrates the use of a SelectionViewer, a Viewer that allows
+the user to select pixels and regions of interest.  Other objects can 
+then operate on the data based on these selections.
+
+To run as a standalone applications (on UNIX systems), one can usually
+type something like, 
+
+   java apps.tests.TestBasicSelectionViewer
+
+in the directory "examples/apps/tests". Alternatively, you could run the
+demo as an applet within the appletviewer that comes with Sun's JDK.  To
+start as an applet, type
+
+   appletviewer TestBasic.html
+
+The applet comes up initially ready to access an GIF image over the
+Web.  You will find better performance, however, accessing local
+images. To access a local image, run as a standalone application (see
+above) and click on the "Browse..." button.  You should see as files
+in the current directory two GIF images and one JPEG image: io.gif,
+GalacticCenter.gif, and hurricane.jpg.
+
+Known Bugs:
+
+  *  This is not really a bug:  one should notice a good bit of
+     "flashing" in the image while making selections.  Double
+     buffering, the programming technique used to reduce this effect,
+     was not used so as to keep the viewer's implementation simpler.  
+     In contrast, the SciDat1 viewer does use double buffering.
+
+TestCursor
+==========
+
+This demonstrates two helper classes, Cursor and ROI ("Region of
+Interest").  TestCursor only runs as an applet, so to run it, type:
+
+    appletviewer TestCursor.html
+
+
+
+
+

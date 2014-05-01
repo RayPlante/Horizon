@@ -1,0 +1,72 @@
+			   FITSImageBrowser
+
+This directory contains a demostration of a basic browser for
+exploring astronomical images in FITS format.  It can be run as either
+an applet within the JDK appletviewer or as a standalone application.
+To run them, you need have JDK 1.0.2 or higher
+(http://java.sun.com/products/JDK) already installed.  You also need
+to properly set your CLASSPATH to include the Horizon library of
+classes.  See Horizon/examples/README for details.
+
+To run this demo as a standalone application, one usually types
+something like,
+
+   java apps.FITSDemo.FITSImageBrowser
+
+in this directory.  Alternatively, you could run the demo as an applet
+within the appletviewer that comes with Sun's JDK.  To start as an
+applet, type:
+
+   appletviewer FITSImageBrowser.html
+
+You can also run this demo from our Web site at 
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples/index.html.
+
+The applet comes up initially ready to access a 3D images cube of
+hydrogen cyanide (HCN) gas from the expanding envelope of the evolved
+star, IRC+10216.  The third axis in the cube represents velocity; each
+slice along this access shows gas moving away from us or toward us at
+a different velecity.  Pressing the "Load" button will cause the data
+to be loaded and displayed.  Other FITS images can be viewed, by
+either selecting another image from the applets choice menu or by
+entering the URL to a valid FITS file in the text field.  (To edit the
+text field, choose "Enter URL above" from the choice menu.)    
+
+A number of controls are available from the viewer's menu bar.  These
+include:  
+
+  Menu Selection:       Action:
+  ----------------------------------------------------------------
+  "Data=>Slice...":     pops up a window for selecting 2-d slices 
+                        from the cube; the slice can be parallel to
+			any side of the cube.  
+
+  "Data=>Range...":     pops up the Transfer Function panel which
+			allows one to restrict the data value range 
+			that gets mapped into viewable colors.
+
+  "Data=>Palletts":     pops up a choice of five color maps that can
+			be used to visualize the data
+
+  "Data=>Metadata":     pops up a window displaying in hierarchical 
+			form the Metadata associated with this data.
+
+  "Control=>Zoom":      pops up a zoom control window
+
+  "Control=>Selections":  
+                        pops up a window for editing data selections
+
+  "Control=>Free Position" 
+		        this allows the positions associated with
+		        fractional pixels to be displayed.  
+
+  "Control=>Position On Select"
+                        When this is turned off, the postions are
+                        updated whenever the mouse moves over the
+                        image.  When turned on, the positions are
+                        displayed only on the last selected voxel.  
+
+
+
+
+

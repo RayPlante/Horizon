@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>World Coodinates Demonstration</title>
+</head>
+<body bgcolor="#C0C0C0">
+
+<center>
+<h3>CoorDemoApplet:<br>
+A Demonstration of the Horizon Coordinate Classes</h3>
+</center>
+
+This applet is a demonstration of a simple viewer that tracks world
+coordinate positions of data voxels within a dataset.  It is provided
+as an example to programmers on the use of Horizon's coordinate
+classes.  For more information about these classes see the article
+<a href="http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/docs/articles/CoordsAndMetadata">
+"Supporting Metadata and Coordinate Systems for Scientific Data in the
+Horizon Java Package"</a> <p>
+
+<center>
+<applet code="apps.CoordDemo.CoordDemoApplet.class" codebase="../../classes"
+        width=650 height=300>
+<!-- datadir: the directory relative to the document base directory that
+              contains the datasets.  (Do not include trailing slash.)
+              The default is blank (i.e. the document base directory) -->
+<param NAME=datadir VALUE="../data">
+
+<!-- imgFile: the image file name; no default.  The resulting default URL
+              that appears in the URL field will be
+              DocumentBaseDir + datadir + imgFile.                    -->
+<param NAME=imgFile VALUE="io.gif">
+
+<i>
+If you are reading this, your WWW browser can't or won't do Java(tm).
+Contact your browser supplier for technical assistance.
+</i> 
+
+<!-- <em>Will be on-line soon.</em> -->
+</applet>
+</center>
+
+Select an image from the menu and then hit "Display" to begin the
+visualization.<p>
+
+
+</body>
+</html>

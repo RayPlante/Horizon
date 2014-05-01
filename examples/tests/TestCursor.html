@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>TestCursor (Java language Version 0.1)</title>
+<!-- Changed by: Devang Mehta, 30-Jan-1998 -->
+</head>
+<body bgcolor="#C0C0C0">
+<p>
+This applet is a test of the Cursor and Region-of-Interest (ROI)
+classes of the ncsa.horizon.awt package.  The Cursor class implements a
+drag-and-drop cursor, useful for differentiating between the windowing
+system cursor and an application cursor.  The ROI class implements a
+graphical region of interest that can be manipulated by the user or
+application.
+<p>
+Quick help:
+Click and drag with the left (or only) mouse button to grab and
+move the cursor or region.
+Click and drag with the right mouse button (or equivalent) to create
+and size a new rectangular region.
+<br>
+<hr>
+<center>
+<applet codebase="../../classes"
+        code="apps.tests.TestCursor.class" width=472 height=500>
+<param name="IMAGE" value="io.gif">
+<param name="DEBUG" value="0">
+<hr>
+<i>
+If you are reading this, your WWW browser can't or won't do Java(tm).
+Contact your browser supplier for technical assistance.
+</i>
+</applet>
+</center>
+<hr>
+Use the menus and controls to change the size, attributes, and location
+of the cursor.
+<p>
+The cursor or region can be grabbed by depressing and holding the mouse
+button when the window system cursor is "inside" the object, and 
+dragged by keeping the mouse button depressed while moving the mouse.
+Drop the object by letting the mouse button up after grabbing/dragging
+it.
+<p>
+Use the right mouse button (or equivalent) to define one vertex of a
+rectangular (so far) region of interest.  While the mouse button is held
+down, the region can be sized.  Releasing the mouse button causes the
+opposite vertex of the region to be defined, completing the ROI.
+<p>
+<font size=-3>
+Java and other Java-based names are trademarks of Sun
+Microsystems, Inc., and refer to Sun's family of Java-branded technologies.
+</font>
+</body>
+</html>

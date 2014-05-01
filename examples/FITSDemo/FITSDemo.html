@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>Horizon Demo: FITS Image Browser</title>
+</head>
+<body bgcolor="#C0C0C0">
+
+<center>
+<h3>FITSImageBrowser:<br>
+A Browser for Astronomical Images</h3>
+</center>
+
+This applet demonstrates a basic tool for the browsing FITS images.  <p>
+
+<center>
+<applet codebase="../../classes"
+        code="apps.FITSDemo.FITSImageBrowser.class" width=515 height=250>
+<center>
+<i>
+If you are reading this, your WWW browser can't or won't do Java(tm).
+Contact your browser supplier for technical assistance.
+</i>
+</applet>
+</center>  <p>
+
+The applet comes up initially ready to access a 3D images cube of
+hydrogen cyanide (HCN) gas from the expanding envelope of the evolved
+star, IRC+10216.  The third axis in the cube represents velocity; each
+slice along this access shows gas moving away from us or toward us at
+a different velecity.  Pressing the "Load" button will cause the data
+to be loaded and displayed.  Other FITS images can be viewed, by
+either selecting another image from the applets choice menu or by
+entering the URL to a valid FITS file in the text field.  (To edit the
+text field, choose "Enter URL above" from the choice menu.)    <p>
+
+
+A number of controls are available from the viewer's menu bar.  These
+include:  <p>
+
+<dl>
+  <dt> "Data=>Slice...":     
+  <dd> pops up a window for selecting 2-d slices 
+       from the cube; the slice can be parallel to
+       any side of the cube.  <p>
+
+  <dt> "Data=>Range...":     
+  <dd> pops up the Transfer Function panel which
+       allows one to restrict the data value range 
+       that gets mapped into viewable colors. <p>
+
+  <dt> "Data=>Palletts":
+  <dd> pops up a choice of five color maps that can
+       be used to visualize the data <p>
+
+  <dt> "Data=>Metadata":     
+  <dd> pops up a zoom control window  <p>
+
+  <dt> "Control=>Zoom":
+  <dd> pops up a zoom control window  <p>
+
+  <dt> "Control=>Selections":
+  <dd> pops up a window for editing data selections  <p>
+
+  <dt> "Control=>Free Position":
+  <dd> this allows the positions associated with
+       fractional pixels to be displayed. <p>
+
+  <dt> "Control=>Position On Select":
+  <dd> When this is turned off, the postions are   
+       updated whenever the mouse moves over the   
+       image.  When turned on, the positions are   
+       displayed only on the last selected voxel.  
+</dl>
+
+</body>
+</html>

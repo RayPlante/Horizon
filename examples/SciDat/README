@@ -1,0 +1,34 @@
+			   SciDat1Applet:
+	  A Demonstration of the Horizon Scientific Data Browser
+
+To run this demo as a standalone application, type:
+
+   java apps.SciDat.SciDat1Applet
+
+in this directory. Alternatively, you could run the demo as an applet
+within the appletviewer that comes with Sun's JDK.  To start as an
+applet, type
+
+   appletviewer SciDat1.html
+
+You can also run this demo from our Web site at 
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples/index.html.
+
+This applet shows an example of how a control panel (in this case, a
+ZoomControl Panel, on left) can cooperate with a Viewer (here, the
+SciDat1Viewer, a SelectionViewer) to add functionality to an applet.
+
+The "Magnifier" button will turn on the Magnifier view to the
+right.  Clicking the left mouse button in the main window selects a
+data voxel which will update the magnifier view. 
+
+You can replace the main view with a zoomed version by first selecting a
+data voxel in the main view.  Next selecting a zoom factor from the
+choice menu in the "Zoom Over Selected Point" portion of the Zoom
+Control; then press the "Zoom" button.  To zoom to an arbitrarily
+shaped box, click the box selector button under the pixel position
+display.  Then hold the left button down over the main view while
+dragging out a box.  After selecting a box in this manner, click the
+"Zoom to Box" button from the Zoom Control.  
+
+

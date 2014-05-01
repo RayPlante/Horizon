@@ -1,0 +1,66 @@
+Horizon Java Image Data Browser Package
+=======================================
+
+This directory contains examples of using Horizon objects to browsing
+scientific image data.  Please note that this is alpha software,
+provided primarily as a preview of what the Horizon package will be
+able to do when it is released in its final form.  Developers
+interested in more details about building applets and applications
+with Horizon objects are encouraged to peruse the source code for
+these applets in addition to the API documentation included with this
+package.  While you are welcome to make use of these classes now,
+please note that the API is still under development and may be subject
+to changes incompatible with this alpha release.
+
+This package should have come with full copyright statements and
+conditions for use, as well as, possible, API documentation.  If not,
+copies may be obtained by accessing our Web site
+(http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/) or by sending email
+to horizon@ncsa.uiuc.edu.
+
+Running the Example Demos
+=========================
+
+To run the example demos, you should:
+
+  * have the standard Java libraries installed on your system.  This
+    could in the form of Sun's Java Developer's Kit (JDK), version 
+    1.0.2 or later.  To run the demos as applets, we recommend you use
+    the appletviewer that comes with JDK.
+
+  * have the Horizon package installed on your system.  If you are
+    reading this, it is probably already installed.  
+
+  * properly set you CLASSPATH environment to include the 
+    standard Java libraries, the Horizon library, and the current 
+    directory.  On a Unix system in the C-shell, one might do this by 
+    typing something like:
+
+      setenv CLASSPATH <std_classpath>:<horizon_path>/classes
+
+    where <std_classpath> is path to the standard Java libraries and 
+    <horizon_path> is the directory containing the Horizon
+    distribution.  (Note the dot at the end indicating the current
+    directory.)  For example, on an SGI system, it may look like:
+
+      setenv CLASSPATH /usr/java/classes:$HOME/Horizon/classes:.
+
+    or under Bourne shell or K-shell:
+
+      CLASSPATH=/usr/java/classes:$HOME/Horizon/classes; export CLASSPATH
+
+    On a Windows NT/95 system, one might open an MS-DOS Prompt window
+    and type:
+
+      set CLASSPATH=C:\java\classes.zip;C:\Horizon\classes
+
+  * change into one of individual sub-directories found in this
+    directory and consult the README file there for more
+    instructions.  Many of the demos require access to the example
+    data that ships with this package; thus, running a demo from its
+    example directory allows it to find that data automatically.  
+
+These demos can also be run from our Web site,
+http://imagelib.ncsa.uiuc.edu/imagelib/Horizon/examples.  
+
+
