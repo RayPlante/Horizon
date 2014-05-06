@@ -104,7 +104,7 @@ public final class JavaType {
 	array = new double[length];
 	break;
       case 9:
-	array = new object[length];
+	array = new Object[length];
 	break;
       }
     }
