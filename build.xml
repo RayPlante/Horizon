@@ -29,13 +29,27 @@
 
   <target name="compile" depends="init">
     <javac srcdir="${dir.src}" destdir="${dir.build.classes}" 
-           debug="${debug}" classpathref="classpath.build" deprecation="on"
+           debug="${debug}" classpathref="classpath.build" deprecation="off"
            optimize="off" source="1.5" includeantruntime="false"/>
     <copy todir="${dir.build.classes}">
       <fileset dir="${dir.src}">
         <include name="**/*.properties"/>
       </fileset>
     </copy>
+  </target>
+
+  <target name="compilefile" depends="init" if="src-file"
+          description="Compile a single class">
+
+    <!-- Compile Java classes as necessary -->
+    <javac srcdir="${dir.src}"
+          destdir="${dir.build.classes}"
+            debug="${debug}"
+      deprecation="${on}"
+         optimize="${off}" source="1.5" includeantruntime="false">
+        <classpath refid="classpath.build"/>
+        <include name="${src-file}"/>
+    </javac>
   </target>
 
   <target name="jar" depends="compile">

@@ -24,3 +24,13 @@ versions of the FITS standards, and any remaining bugs.  A modern
 build and test system will be added.  
 
 There is currently no schedule for this work.  
+
+As of 6 May 2014:
+  o  Code now compiles under Java 1.6 with numerous deprecation
+      warnings.  Note that all GUI components are based on AWT.  
+  o  GUI apps and applets under examples easily hang.  The most
+      functional ones are: 
+      +  FITSDemo
+      +  tests/TestSimple
+      +  tests/TestBasic
+      +  tests/TestCursor
