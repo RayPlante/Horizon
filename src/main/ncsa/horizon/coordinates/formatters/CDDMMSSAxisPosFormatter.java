@@ -21,8 +21,8 @@
 package ncsa.horizon.coordinates.formatters;
 
 import java.util.StringTokenizer;
+import java.util.Formatter;
 import ncsa.horizon.coordinates.*;
-import Acme.Fmt;
 
 /**
  * support for printing out angles in degrees:minutes:seconds format over
@@ -111,17 +111,10 @@ public class CDDMMSSAxisPosFormatter implements AxisPosFormatter {
 	    out.append(ss);
 	}
 	else {
-
-	    // specific precision requested; first determine number of 
-	    // places to appear left of decimal
-	    String tmp = Fmt.fmt(ss, 0, 0, Fmt.LJ);
-	    int p = tmp.indexOf('.');
-	    if (p < 0) p = tmp.length();
-	    int sigfigs = p + prec;
-	    int minwidth = sigfigs + 1;
-
-	    // now format the seconds
-	    out.append( Fmt.fmt(ss, minwidth, sigfigs, Fmt.ZF) );
+            // format the seconds with the desired precision
+            String fmt = "%0."+prec+"f";
+            Formatter fmtr = new Formatter(out);
+            fmtr.format(fmt, ss);
 	}
 
 	return out.toString();

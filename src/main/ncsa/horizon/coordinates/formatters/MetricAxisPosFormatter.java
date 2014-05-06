@@ -26,7 +26,6 @@ package ncsa.horizon.coordinates.formatters;
 
 import java.util.*;
 import ncsa.horizon.coordinates.*;
-import Acme.Fmt;
 
 /**
  * support for printing out double values as floating point numbers

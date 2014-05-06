@@ -21,7 +21,8 @@
 package ncsa.horizon.coordinates.formatters;
 
 import ncsa.horizon.coordinates.*;
-import Acme.Fmt;
+
+import java.util.Formatter;
 
 /**
  * support for printing out double values as floating point numbers.
@@ -45,18 +46,13 @@ public class GenericAxisPosFormatter implements AxisPosFormatter, Cloneable {
      * @param prec the number of places right of the decimal point
      */
     public String toString(double val, int prec) { 
+        String fmt = "%." + Integer.toString(prec) + "g";
 
-	// determine number of places to appear left of decimal
-	String tmp = Fmt.fmt(Math.abs(val), 0, 0, Fmt.LJ);
-	int p = tmp.indexOf('.');
-	int e = tmp.indexOf('E');
-	if (p < 0) {
-	    p = (e < 0) ? tmp.length() : e;
-	} 
+        StringBuilder out = new StringBuilder();
+        Formatter fmtr = new Formatter(out);
+        fmtr.format(fmt, val);
 
-	int sigfigs = p + prec;
-	int minwidth = sigfigs + 1;
-	return Fmt.fmt(val, minwidth, sigfigs, Fmt.ZF);
+        return out.toString();
     }
 
     /**
